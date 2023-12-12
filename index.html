@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font awsome link -->
+    <link href="./assets/font/fontawesome-pro-6.5.1/css/all.min.css" rel="stylesheet">
+    <!-- Google font link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/toast-msg.css">
+
+    <!-- Favicon Link -->
+    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+
+    <title>Flagship Store</title>
+</head>
+<body>
+    <!-- Start: Header top -->
+    <header>
+        <div class="header-top">
+            <div class="container">
+                <div class="header-top-left">
+                    <div class="header-logo">
+                        <a href="">
+                            <img src="./assets/img/logo.jpg" alt="Logo" class="header-logo-img">
+                        </a>
+                    </div>
+                </div>
+                <div class="header-top-center">
+                    <form action="" class="form-search">
+                        <span class="search-btn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                        <input
+                                type="text"
+                                class="form-search-input"
+                                placeholder="Tìm kiếm sản phẩm"
+                                oninput="searchProducts()"
+                        >
+                        <button class="filter-btn">
+                            <i class="fa-solid fa-filter"></i>
+                            <span>Lọc</span>
+                        </button>
+                    </form>
+                </div>
+                <div class="header-top-right">
+                    <ul class="header-top-right-list">
+                        <li class="header-top-right-item dropdown">
+                            <i class="fa-regular fa-user"></i>
+                            <div class="auth-container">
+                                <span class="text-register-login">Đăng nhập / Đăng ký</span>
+                                <span class="text-account">
+                                    Tài khoản
+                                    <i class="fa-solid fa-caret-down"></i>
+                                </span>
+                            </div>
+                            <!-- Sign up / Login menu -->
+                            <ul class="header-top-right-menu">
+                                <li>
+                                    <a href="javascript:" id="login">
+                                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                                        Đăng nhập
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:" id="signup">
+                                        <i class="fa-solid fa-user-plus"></i>
+                                        Đăng ký
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="header-top-right-item open" onclick="openCart()">
+                            <div class="cart-icon-menu">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <span class="count-product-cart">0</span>
+                            </div>
+                            <span>Giỏ hàng</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- End: Header top -->
+
+    <!-- Start: Header bottom -->
+    <nav class="header-bottom">
+        <div class="container">
+            <ul class="menu-list">
+                <li class="menu-list-item">
+                    <a href="" class="menu-link">Trang chủ</a>
+                </li>
+                <li class="menu-list-item" onclick="showCategory('Samsung')">
+                    <a href="javascript:" class="menu-link">Samsung</a>
+                </li>
+                <li class="menu-list-item" onclick="showCategory('Apple')">
+                    <a href="javascript:" class="menu-link">Apple</a>
+                </li>
+                <li class="menu-list-item" onclick="showCategory('Oppo')">
+                    <a href="javascript:" class="menu-link">Oppo</a>
+                </li>
+                <li class="menu-list-item" onclick="showCategory('Xiaomi')">
+                    <a href="javascript:" class="menu-link">Xiaomi</a>
+                </li>
+                <li class="menu-list-item" onclick="showCategory('Huawei')">
+                    <a href="javascript:" class="menu-link">Huawei</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- End: Header bottom -->
+
+    <!-- Start: Advanced Search -->
+    <div class="advanced-search">
+        <div class="container">
+            <div class="advanced-search-category">
+                <span>Phân loại</span>
+                <select name="" id="advanced-search-category-select" onchange="searchProducts()">
+                    <option>Tất cả</option>
+                    <option>Samsung</option>
+                    <option>Apple</option>
+                    <option>Oppo</option>
+                    <option>Xiaomi</option>
+                    <option>Huawei</option>
+                </select>
+            </div>
+            <div class="advanced-search-price">
+                <span>Giá từ</span>
+                <input type="number" placeholder="Tối thiểu" id="min-price" min="7000000" max="50000000" onchange="searchProducts()">
+                <span>đến</span>
+                <input type="number" placeholder="Tối đa" id="max-price" min="7000000" max="50000000" onchange="searchProducts()">
+                <button id="advanced-search-price-btn">
+                    <i class="fa-light fa-filter-circle-dollar"></i>
+                </button>
+            </div>
+            <div class="advanced-search-control">
+                <button class="sort-ascending" onclick="searchProducts(1)">
+                    <i class="fa-solid fa-arrow-up-short-wide"></i>
+                </button>
+                <button class="sort-descending" onclick="searchProducts(2)">
+                    <i class="fa-solid fa-arrow-down-wide-short"></i>
+                </button>
+                <button class="reset-search" onclick="searchProducts(0)">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+                <button onclick="closeAdvancedSearch()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- End: Advanced Search -->
+
+    <!-- Start: Main wrapper -->
+    <main class="main-wrapper">
+        <!-- Start: Main home -->
+        <div class="container" id="home">
+            <!-- Start: Slider -->
+            <div class="home-slider">
+                <div class="slide">
+                    <img src="./assets/img/slider/slider2.jpg">
+                </div>
+            </div>
+            <!-- End: Slider -->
+            <div class="home-service" id="home-service">
+                <div class="home-service-item">
+                    <div class="home-service-item-icon">
+                        <i class="fa-light fa-truck-fast"></i>
+                    </div>
+                    <div class="home-service-item-content">
+                        <h4 class="home-service-item-content-h">GIAO HÀNG NHANH</h4>
+                        <p class="home-service-item-content-desc">Cho tất cả đơn hàng</p>
+                    </div>
+                </div>
+                <div class="home-service-item">
+                    <div class="home-service-item-icon">
+                        <i class="fa-light fa-ranking-star"></i>
+                    </div>
+                    <div class="home-service-item-content">
+                        <h4 class="home-service-item-content-h">SẢN PHẨM CHẤT LƯỢNG</h4>
+                        <p class="home-service-item-content-desc">Xứng đáng với giá tiền</p>
+                    </div>
+                </div>
+                <div class="home-service-item">
+                    <div class="home-service-item-icon">
+                        <i class="fa-light fa-badge-check"></i>
+                    </div>
+                    <div class="home-service-item-content">
+                        <h4 class="home-service-item-content-h">HÀNG CHÍNH HÃNG</h4>
+                        <p class="home-service-item-content-desc">Bảo hành chính hãng</p>
+                    </div>
+                </div>
+                <div class="home-service-item">
+                    <div class="home-service-item-icon">
+                        <i class="fa-light fa-user-headset"></i>
+                    </div>
+                    <div class="home-service-item-content">
+                        <h4 class="home-service-item-content-h">HỖ TRỢ 24/7</h4>
+                        <p class="home-service-item-content-desc">Dịch vụ CSKH tận tâm nhất</p>
+                    </div>
+                </div>
+            </div>
+            <div class="home-title-block" id="home-title">
+                <h2 class="home-title">Danh sách sản phẩm</h2>
+            </div>
+            <!-- Start: Product list -->
+            <div class="home-products" id="home-products">
+
+            </div>
+            <!-- End: Product list -->
+            <!-- Start: Pagination -->
+            <div class="page-nav">
+                <ul class="page-nav-list">
+
+                </ul>
+            </div>
+            <!-- End: Pagination -->
+        </div>
+        <!-- End: Main home -->
+
+        <!-- Start: Main order history -->
+        <div class="container" id="order-history">
+            <div class="main-order">
+                <div class="main-order-header">
+                    <h3>Quản lý đơn hàng đã đặt của bạn</h3>
+                    <p>Xem chi tiết, trạng thái của những đơn hàng đã đặt</p>
+                </div>
+                <div class="main-order-body">
+                    <div class="order-history-section">
+                        <!-- Javascript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End: Main order history -->
+    </main>
+    <!-- End: Main wrapper -->
+
+    <!-- Start: Modal product detail -->
+    <div class="modal product-detail">
+        <div class="modal-container mdl-cnt" id="product-detail-content">
+        </div>
+    </div>
+    <!-- End: Modal product detail -->
+
+    <!-- Start: Modal Sign Up & Login -->
+    <div class="modal signup-login">
+        <div class="modal-container">
+            <button class="form-close">
+                <i class="fa-regular fa-xmark"></i>
+            </button>
+            <div class="forms mdl-cnt">
+                <!-- Start: Sign up form -->
+                <div class="form-content signup">
+                    <h3 class="form-title">Đăng ký tài khoản</h3>
+                    <p class="form-desc">
+                        Đăng ký tài khoản để mua hàng và hưởng nhiều ưu đãi độc quyền từ Flagship Store!
+                    </p>
+                    <form action="" class="signup-form">
+                        <div class="form-group">
+                            <label for="fullname" class="form-label">Họ và tên</label>
+                            <input
+                                    id="fullname"
+                                    name="fullname"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="VD: Nguyễn Phạm Quỳnh Hương"
+                            >
+                            <span class="form-message-name form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber" class="form-label">Số điện thoại</label>
+                            <input
+                                    id="phoneNumber"
+                                    name="phoneNumber"
+                                    type="tel"
+                                    class="form-control"
+                                    placeholder="Nhập số điện thoại"
+                            >
+                            <span class="form-message-phone form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label">Mật khẩu</label>
+                            <input
+                                    id="password"
+                                    name="password"
+                                    type="password"
+                                    class="form-control"
+                                    placeholder="Nhập mật khẩu"
+                            >
+                            <span class="form-message-password form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password_confirmation" class="form-label">Nhập lại mật khẩu</label>
+                            <input
+                                    id="password_confirmation"
+                                    name="password_confirmation"
+                                    type="password"
+                                    class="form-control"
+                                    placeholder="Nhập lại mật khẩu"
+                            >
+                            <span class="form-message-password-confirm form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="checkbox" id="checkbox-signup" class="checkbox" required>
+                            <label for="checkbox-signup" class="form-checkbox">
+                                Bằng việc đăng ký, tôi đồng ý với cửa hàng về
+                                <a href="#">Điều khoản dịch vụ</a>
+                                &
+                                <a href="#">Chính sách bảo mật</a>
+                            </label>
+                            <span class="form-message-checkbox form-message"></span>
+                        </div>
+                        <button class="form-submit" id="signup-btn">Đăng ký</button>
+                    </form>
+                    <p class="change-login">
+                        Bạn đã có tài khoản?
+                        <a href="javascript:" class="login-link">Đăng nhập</a>
+                        ngay.
+                    </p>
+                </div>
+                <!-- End: Sign up form -->
+
+                <!-- Start: Login form -->
+                <div class="form-content login">
+                    <h3 class="form-title">Đăng nhập</h3>
+                    <p class="form-desc">Đăng nhập để mua hàng và nhận nhiều ưu đãi độc quyền từ Flagship Store dành riêng cho thành viên</p>
+                    <form action="" class="login-form">
+                        <div class="form-group">
+                            <label for="phoneNumber" class="form-label">Số điện thoại</label>
+                            <input
+                                    type="tel"
+                                    name="phoneNumber"
+                                    id="phone-login"
+                                    class="form-control"
+                                    placeholder="Nhập số điện thoại"
+                            >
+                            <span class="form-message phonelog"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label">Mật khẩu</label>
+                            <input
+                                    type="password"
+                                    name="password"
+                                    id="password-login"
+                                    class="form-control"
+                                    placeholder="Nhập mật khẩu"
+                            >
+                            <span class="form-message-check-login form-message"></span>
+                        </div>
+                        <button class="form-submit" id="login-btn">Đăng nhập</button>
+                    </form>
+                    <p class="change-login">
+                        Bạn chưa có tài khoản?
+                        <a href="javascript:" class="signup-link">Đăng ký</a>
+                        ngay.
+                    </p>
+                </div>
+                <!-- End: Login form -->
+            </div>
+        </div>
+    </div>
+    <!-- End: Modal Sign Up & Login -->
+
+    <!-- Start: Modal cart -->
+    <div class="modal-cart">
+        <div class="cart-container">
+            <div class="cart-header">
+                <h3 class="cart-header-title">
+                    <i class="fa-regular fa-basket-shopping"></i>
+                    Giỏ hàng
+                </h3>
+                <button class="cart-close" onclick="closeCart()">
+                    <i class="fa-light fa-circle-xmark"></i>
+                </button>
+            </div>
+            <div class="cart-body">
+                <div class="empty-cart">
+                    <i class="fa-regular fa-cart-xmark"></i>
+                    <p>Không có sản phẩm nào trong giỏ hàng của bạn</p>
+                </div>
+                <ul class="cart-list">
+
+                </ul>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total-price">
+                    <p class="text-total">Tổng tiền:</p>
+                    <p class="text-total-price">0 đ</p>
+                </div>
+                <div class="cart-footer-payment">
+                    <button class="buy-more">
+                        <i class="fa-regular fa-plus"></i>
+                        Tiếp tục mua hàng
+                    </button>
+                    <button class="payment disabled">Thanh toán</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End: Modal cart -->
+
+    <!-- Start: Modal Order Detail -->
+    <div class="modal detail-order">
+        <div class="modal-container mdl-cnt">
+            <h3 class="modal-container-title">Thông tin đơn hàng</h3>
+            <button class="form-close" onclick="closeModal()">
+                <i class="fa-regular fa-xmark"></i>
+            </button>
+            <div class="detail-order-content">
+                <!-- Javascript -->
+            </div>
+        </div>
+    </div>
+    <!-- End: Modal Order Detail -->
+
+    <!-- Start: Footer -->
+    <footer class="footer">
+        <div class="widget-area">
+            <div class="container">
+                <div class="widget-row">
+                    <div class="widget-row-col-1">
+                        <h3 class="widget-title">Tổng đài hỗ trợ miễn phí</h3>
+                        <ul class="widget-contact">
+                            <li class="widget-contact-item">
+                                <a href="">
+                                    <i class="fa-regular fa-phone"></i>
+                                    <span>Gọi mua hàng: 1700 0000</span>
+                                </a>
+                            </li>
+                            <li class="widget-contact-item">
+                                <a href="">
+                                    <i class="fa-regular fa-phone"></i>
+                                    <span>Gọi tư vấn: 1900 0000</span>
+                                </a>
+                            </li>
+                            <li class="widget-contact-item">
+                                <a href="">
+                                    <i class="fa-regular fa-phone"></i>
+                                    <span>Gọi khiếu nại: 1900 0000</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="widget-row-col-1">
+                        <h3 class="widget-title">Thông tin và chính sách</h3>
+                        <ul class="widget-contact">
+                            <li class="widget-contact-item">
+                                <a href="">
+                                    <i class="fa-regular fa-arrow-right"></i>
+                                    <span>Về chúng tôi</span>
+                                </a>
+                            </li>
+                            <li class="widget-contact-item">
+                                <a href="">
+                                    <i class="fa-regular fa-arrow-right"></i>
+                                    <span>Mua hàng và thanh toán online</span>
+                                </a>
+                            </li>
+                            <li class="widget-contact-item">
+                                <a href="">
+                                    <i class="fa-regular fa-arrow-right"></i>
+                                    <span>Xem ưu đãi</span>
+                                </a>
+                            </li>
+                            <li class="widget-contact-item">
+                                <a href="">
+                                    <i class="fa-regular fa-arrow-right"></i>
+                                    <span>Mua hàng trả góp online</span>
+                                </a>
+                            </li>
+                            <li class="widget-contact-item">
+                                <a href="">
+                                    <i class="fa-regular fa-arrow-right"></i>
+                                    <span>Chính sách giao hàng</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="widget-row-col-1">
+                        <h3 class="widget-title">Mạng xã hội</h3>
+                        <div class="contact">
+                            <div class="contact-item social-link">
+                                <div class="contact-item-icon">
+                                    <i class="fa-brands fa-facebook"></i>
+                                </div>
+                                <div class="contact-content">
+                                    <span>Facebook</span>
+                                </div>
+                            </div>
+                            <div class="contact-item social-link">
+                                <div class="contact-item-icon">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </div>
+                                <div class="contact-content">
+                                    <span>Instagram</span>
+                                </div>
+                            </div>
+                            <div class="contact-item social-link">
+                                <div class="contact-item-icon">
+                                    <i class="fa-brands fa-youtube"></i>
+                                </div>
+                                <div class="contact-content">
+                                    <span>Youtube</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-row-col-1">
+                        <h3 class="widget-title">Liên lạc với chúng tôi</h3>
+                        <div class="contact">
+                            <div class="contact-item">
+                                <div class="contact-item-icon">
+                                    <i class="fa-regular fa-location-dot"></i>
+                                </div>
+                                <div class="contact-content">
+                                    <span>273 An Dương Vương, Phường 3, Quận 5, TP Hồ Chí Minh</span>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-item-icon">
+                                    <i class="fa-regular fa-envelope"></i>
+                                </div>
+                                <div class="contact-content contact-item-email">
+                                    <span>quynhhuong@gmail.com</span>
+                                    <br />
+                                    <span>phattran@gmail.com</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End: Footer -->
+
+    <!-- Start: Back to top button -->
+    <div class="back-to-top">
+        <a href="#">
+            <i class="fa-regular fa-arrow-up"></i>
+        </a>
+    </div>
+    <!-- End: Back to top button -->
+
+    <!-- Start: Checkout page -->
+    <div class="checkout-page">
+        <div class="checkout-header">
+            <div class="checkout-return">
+                <button onclick="closeCheckout()">
+                    <i class="fa-regular fa-chevron-left"></i>
+                </button>
+            </div>
+            <h2 class="checkout-title">Thanh toán</h2>
+        </div>
+        <main class="checkout-section container">
+            <div class="checkout-col-left">
+                <div class="checkout-row">
+                    <div class="checkout-col-title">Thông tin giao hàng</div>
+                    <div class="checkout-col-content">
+                        <div class="content-group">
+                            <p class="checkout-content-label">Hình thức giao hàng</p>
+                            <div class="chekout-type-order">
+                                <button class="type-order-btn active" id="giao-tan-noi">
+                                    <i class="fa-duotone fa-moped" style="--fa-primary-color: #ff6000; --fa-secondary-color: #f03c0f;"></i>
+                                    Giao tận nơi
+                                </button>
+                                <button class="type-order-btn" id="tu-den-lay">
+                                    <i class="fa-duotone fa-box-heart" style="--fa-primary-color: #ff6000; --fa-secondary-color: #e83030;"></i>
+                                    Nhận tại cửa hàng
+                                </button>
+                            </div>
+                        </div>
+                        <div class="content-group">
+                            <p class="checkout-content-label">Ngày giao hàng</p>
+                            <div class="date-order">
+                                <!--   Javascript   -->
+                            </div>
+                            <div class="content-group chk-ship" id="giaotannoi-group">
+                                <p class="checkout-content-label">Thời gian giao hàng</p>
+                                <div class="delivery-time">
+                                    <input type="radio" class="radio" id="giao-ngay" name="giao-ngay">
+                                    <label for="giao-ngay">Giao hỏa tốc (2h)</label>
+                                </div>
+                                <div class="delivery-time">
+                                    <input type="radio" class="radio" id="delivery-time" name="giao-ngay">
+                                    <label for="delivery-time">Giao vào giờ</label>
+                                    <select class="choose-time">
+                                        <option data-hours="08" value="08:00" selected="selected"> 08:00 - 09:00 </option>
+                                        <option data-hours="09" value="09:00"> 09:00 - 10:00 </option>
+                                        <option data-hours="10" value="10:00"> 10:00 - 11:00 </option>
+                                        <option data-hours="11" value="11:00"> 11:00 - 12:00 </option>
+                                        <option data-hours="12" value="12:00"> 12:00 - 13:00 </option>
+                                        <option data-hours="13" value="13:00"> 13:00 - 14:00 </option>
+                                        <option data-hours="14" value="14:00"> 14:00 - 15:00 </option>
+                                        <option data-hours="15" value="15:00"> 15:00 - 16:00 </option>
+                                        <option data-hours="16" value="16:00"> 16:00 - 17:00 </option>
+                                        <option data-hours="17" value="17:00"> 17:00 - 18:00 </option>
+                                        <option data-hours="18" value="18:00"> 18:00 - 19:00 </option>
+                                        <option data-hours="19" value="19:00"> 19:00 - 20:00 </option>
+                                        <option data-hours="20" value="20:00"> 20:00 - 21:00 </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="content-group" id="tudenlay-group">
+                                <p class="checkout-content-label">Lấy hàng tại chi nhánh</p>
+                                <div class="delivery-time">
+                                    <input type="radio" class="radio" id="chinhanh-1" name="chi-nhanh">
+                                    <label for="chinhanh-1">273 An Dương Vương, Phường 3, Quận 5</label>
+                                </div>
+                                <div class="delivery-time">
+                                    <input type="radio" class="radio" id="chinhanh-2" name="chi-nhanh">
+                                    <label for="chinhanh-2">105 Bà Huyện Thanh Quan, Phường Võ Thị Sáu, Quận 3</label>
+                                </div>
+                                <div class="delivery-time">
+                                    <input type="radio" class="radio" id="chinhanh-3" name="chi-nhanh">
+                                    <label for="chinhanh-3">4 Tôn Đức Thắng, Phường Bến Nghé, Quận 1</label>
+                                </div>
+                            </div>
+                            <div class="content-group">
+                                <p class="checkout-content-label">Ghi chú đơn hàng</p>
+                                <textarea class="note-order" placeholder="Nhập ghi chú đơn hàng"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="checkout-row">
+                    <div class="checkout-col-title">
+                        Thông tin nhận hàng
+                    </div>
+                    <div class="checkout-col-content">
+                        <div class="content-group">
+                            <form action="" class="info-nhan-hang">
+                                <div class="form-group">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            id="ten-nguoi-nhan"
+                                            name="ten-nguoi-nhan"
+                                            placeholder="Nhập tên người nhận"
+                                    >
+                                    <div class="form-message"></div>
+                                </div>
+                                <div class="form-group">
+                                    <input
+                                            type="tel"
+                                            class="form-control"
+                                            id="sdt-nhan"
+                                            name="sdt-nhan"
+                                            placeholder="Nhập số điện thoại nhận hàng"
+                                    >
+                                    <div class="form-message"></div>
+                                </div>
+                                <div class="form-group">
+                                    <input
+                                            type="text"
+                                            class="form-control chk-ship"
+                                            id="dia-chi-nhan"
+                                            name="dia-chi-nhan"
+                                            placeholder="Nhập địa chỉ nhận hàng"
+                                    >
+                                    <div class="form-message"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="checkout-col-right">
+                <div class="checkout-content-label">Thông tin đơn hàng</div>
+                <div class="bill-total" id="list-order-checkout">
+                    <!--   Javascript   -->
+                </div>
+                <div class="bill-payment">
+                    <div class="total-bill-order">
+                        <!--   Javascript   -->
+                    </div>
+                    <div class="policy-note">
+                        Bằng việc đặt hàng, tôi đã đồng ý với
+                        <a href="#" target="_blank">Điều khoản giao nhận hàng</a>
+                        của cửa hàng.
+                    </div>
+                </div>
+                <div class="total-check-out">
+                    <div class="text">Tổng tiền</div>
+                    <div class="price-bill">
+                        <div class="price-final" id="checkout-cart-price-final">
+                            0
+                        </div>
+                    </div>
+                </div>
+                <button class="complete-checkout-btn">Đặt hàng</button>
+            </div>
+        </main>
+    </div>
+    <!-- End: Checkout page -->
+
+    <!-- Start: Toast message -->
+    <div id="toast"></div>
+    <!-- End: Toast message -->
+
+    <!-- JavaScript Link -->
+    <script src="./js/main.js"></script>
+    <script src="./js/toast-msg.js"></script>
+    <script src="./js/initialization.js"></script>
+</body>
+</html>

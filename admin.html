@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Link: CSS -->
+    <link rel="stylesheet" href="./assets/css/admin.css">
+    <link rel="stylesheet" href="./assets/css/toast-msg.css">
+    <!-- Font awsome link -->
+    <link href="./assets/font/fontawesome-pro-6.5.1/css/all.min.css" rel="stylesheet">
+    <!-- Google font link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Favicon Link -->
+    <link rel="shortcut icon" href="./assets/img/favicon.png" type="image/x-icon">
+
+    <title>Quản lý cửa hàng</title>
+</head>
+<body>
+    <!-- Start: Sidebar Menu Icon-->
+    <header class="header">
+        <button class="menu-icon-btn" title="Ấn để đóng/mở sidebar">
+            <div class="menu-icon">
+                <i class="fa-regular fa-bars"></i>
+            </div>
+        </button>
+    </header>
+    <!-- Start: Sidebar Menu Icon-->
+
+    <!-- Start: Side bar Menu -->
+    <div class="container">
+        <aside class="sidebar open">
+            <div class="top-sidebar">
+                <a href="#" class="admin-logo">
+                    <img src="./assets/img/favicon.png" alt="">
+                </a>
+                <div class="hidden-sidebar">Flagship Store</div>
+            </div>
+            <div class="middle-sidebar">
+                <ul class="sidebar-list">
+                    <li class="sidebar-list-item tab-content active">
+                        <a href="#" class="sidebar-link">
+                            <div class="sidebar-icon">
+                                <i class="fa-light fa-mobile"></i>
+                            </div>
+                            <div class="hidden-sidebar">Sản phẩm</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item tab-content">
+                        <a href="#" class="sidebar-link">
+                            <div class="sidebar-icon">
+                                <i class="fa-light fa-users"></i>
+                            </div>
+                            <div class="hidden-sidebar">Khách hàng</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item tab-content">
+                        <a href="#" class="sidebar-link">
+                            <div class="sidebar-icon">
+                                <i class="fa-light fa-boxes-stacked"></i>
+                            </div>
+                            <div class="hidden-sidebar">Đơn hàng</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item tab-content">
+                        <a href="#" class="sidebar-link">
+                            <div class="sidebar-icon">
+                                <i class="fa-light fa-chart-pie-simple-circle-dollar"></i>
+                            </div>
+                            <div class="hidden-sidebar">Thống kê</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="bottom-sidebar">
+                <ul class="sidebar-list">
+                    <li class="sidebar-list-item admin-logout">
+                        <a href="./index.html" class="sidebar-link">
+                            <div class="sidebar-icon">
+                                <i class="fa-light fa-house"></i>
+                            </div>
+                            <div class="hidden-sidebar">Trang chủ</div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item admin-logout">
+                        <a href="" class="sidebar-link">
+                            <div class="sidebar-icon">
+                                <i class="fa-light fa-user-crown"></i>
+                            </div>
+                            <div class="hidden-sidebar" id="admin-name"></div>
+                        </a>
+                    </li>
+                    <li class="sidebar-list-item admin-logout">
+                        <a href="" class="sidebar-link" id="logout-admin">
+                            <div class="sidebar-icon">
+                                <i class="fa-light fa-right-from-bracket"></i>
+                            </div>
+                            <div class="hidden-sidebar">Đăng xuất</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        <main class="content">
+            <!-- Product -->
+            <div class="section product-all active">
+                <div class="admin-control">
+                    <div class="admin-control-left">
+                        <select name="category" id="category" onchange="showProducts()">
+                            <option>Tất cả</option>
+                            <option>Samsung</option>
+                            <option>Apple</option>
+                            <option>Oppo</option>
+                            <option>Xiaomi</option>
+                            <option>Huawei</option>
+                            <option>Đã ẩn</option>
+                        </select>
+                    </div>
+                    <div class="admin-control-center">
+                        <form action="" class="form-search">
+                            <span class="search-btn">
+                                <i class="fa-light fa-magnifying-glass"></i>
+                            </span>
+                            <input
+                                    type="text"
+                                    class="form-search-input"
+                                    id="form-search-product"
+                                    placeholder="Nhập tên sản phẩm cần tìm"
+                                    oninput="showProducts()"
+                            >
+                        </form>
+                    </div>
+                    <div class="admin-control-right">
+                        <button class="btn-control-large" id="btn-cancel-product" onclick="refreshProduct()">
+                            <i class="fa-light fa-rotate-right"></i>
+                            Làm mới
+                        </button>
+                        <button class="btn-control-large" id="btn-add-product">
+                            <i class="fa-light fa-plus"></i>
+                            Thêm sản phẩm
+                        </button>
+                    </div>
+                </div>
+                <div id="show-product">
+                    <!--  Javascript  -->
+                </div>
+                <div class="page-nav">
+                    <ul class="page-nav-list"></ul>
+                </div>
+            </div>
+            <!-- User -->
+            <div class="section">
+                <div class="admin-control">
+                    <div class="admin-control-left">
+                        <select name="userStatus" id="user-status" onchange="showUser()">
+                            <option value="2">Tất cả</option>
+                            <option value="1">Hoạt động</option>
+                            <option value="0">Bị khóa</option>
+                        </select>
+                    </div>
+                    <div class="admin-control-center">
+                        <form action="" class="form-search">
+                            <span class="search-btn">
+                                <i class="fa-light fa-magnifying-glass"></i>
+                            </span>
+                            <input
+                                    type="text"
+                                    class="form-search-input"
+                                    id="form-search-user"
+                                    placeholder="Tìm kiếm khách hàng"
+                                    oninput="showUser()"
+                            >
+                        </form>
+                    </div>
+                    <div class="admin-control-right">
+                        <form action="" class="filter-date">
+                            <div>
+                                <label for="time-start-user">Từ</label>
+                                <input type="date" class="form-control-date" id="time-start-user" onchange="showUser()">
+                            </div>
+                            <div>
+                                <label for="time-end-user">Đến</label>
+                                <input type="date" class="form-control-date" id="time-end-user" onchange="showUser()">
+                            </div>
+                        </form>
+                        <button class="btn-reset-order" onclick="refreshSearchUser()">
+                            <i class="fa-light fa-arrow-rotate-right"></i>
+                        </button>
+                        <button id="btn-add-user" class="btn-control-large" onclick="openCreateAccount()">
+                            <i class="fa-light fa-plus"></i>
+                            <span>Thêm khách hàng</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="table">
+                    <table width="100%">
+                        <thead>
+                            <tr>
+                                <td>STT</td>
+                                <td>Họ và tên</td>
+                                <td>Số điện thoại</td>
+                                <td>Ngày tham gia</td>
+                                <td>Tình trạng</td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="show-user">
+                            <!--   JavaScript   -->
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Order -->
+            <div class="section">
+                <div class="admin-control">
+                    <div class="admin-control-left">
+                        <select name="orderStatus" id="order-status" onchange="searchOrder()">
+                            <option value="2">Tất cả</option>
+                            <option value="1">Đã xử lý</option>
+                            <option value="0">Chưa xử lý</option>
+                        </select>
+                    </div>
+                    <div class="admin-control-center">
+                        <form action="" class="form-search">
+                            <span class="search-btn">
+                                <i class="fa-light fa-magnifying-glass"></i>
+                            </span>
+                            <input
+                                    type="text"
+                                    class="form-search-input"
+                                    id="form-search-order"
+                                    placeholder="Tìm kiếm mã đơn, khách hàng"
+                                    oninput="searchOrder()"
+                            >
+                        </form>
+                    </div>
+                    <div class="admin-control-right">
+                        <form action="" class="filter-date">
+                            <div>
+                                <label for="time-start-user">Từ</label>
+                                <input type="date" class="form-control-date" id="time-start-order" onchange="searchOrder()">
+                            </div>
+                            <div>
+                                <label for="time-end-user">Đến</label>
+                                <input type="date" class="form-control-date" id="time-end-order" onchange="searchOrder()">
+                            </div>
+                        </form>
+                        <button class="btn-reset-order" onclick="resetOrderSearch()">
+                            <i class="fa-light fa-arrow-rotate-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="table">
+                    <table width="100%">
+                        <thead>
+                            <tr>
+                                <td>Mã đơn</td>
+                                <td>Khách hàng</td>
+                                <td>Ngày đặt</td>
+                                <td>Tổng tiền</td>
+                                <td>Trạng thái</td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody id="show-order">
+                        <!--   JavaScript   -->
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- End: Side bar Menu -->
+
+    <!-- Start: Add product modal -->
+    <div class="modal add-product-modal">
+        <div class="modal-container">
+            <h3 class="modal-container-title add-product">THÊM SẢN PHẨM MỚI</h3>
+            <h3 class="modal-container-title edit-product">CHỈNH SỬA SẢN PHẨM</h3>
+            <button class="modal-close product-form">
+                <i class="fa-regular fa-xmark"></i>
+            </button>
+            <div class="modal-content">
+                <form action="" class="add-prodcut-form">
+                    <div class="modal-content-left">
+                        <img src="./assets/img/admin/blank-image.png" alt="" class="upload-img-preview" id="image-preview">
+                        <div class="form-group file">
+                            <label for="upload-img" class="form-label-file">
+                                <i class="fa-regular fa-cloud-arrow-up"></i>
+                                Chọn hình ảnh
+                            </label>
+                            <input
+                                    type="file"
+                                    name="upload-img"
+                                    id="upload-img"
+                                    class="form-control"
+                                    accept="image/jpeg, image/png, image/jpg"
+                                    onchange="changeImage(this)"
+                            >
+                        </div>
+                    </div>
+                    <div class="modal-content-right">
+                        <div class="form-group">
+                            <label for="product-name" class="form-label">Tên sản phẩm</label>
+                            <input
+                                    type="text"
+                                    name="product-name"
+                                    placeholder="Nhập tên sản phẩm"
+                                    id="product-name"
+                                    class="form-control"
+                            >
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-category" class="form-label">Hãng</label>
+                            <select name="product-category" id="product-category">
+                                <option>Samsung</option>
+                                <option>Apple</option>
+                                <option>Oppo</option>
+                                <option>Xiaomi</option>
+                                <option>Huawei</option>
+                            </select>
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-price" class="form-label">Giá bán</label>
+                            <input
+                                    type="text"
+                                    name="product-price"
+                                    placeholder="Nhập giá bán"
+                                    id="product-price"
+                                    class="form-control"
+                            >
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-specs" class="form-label">Cấu hình</label>
+                            <div class="form-specs-control" id="product-specs">
+                                <div class="product-specs-input">
+                                    <label for="chip" class="specs-label">Chip: </label>
+                                    <input type="text" id="chip" class="specs-input" placeholder="Nhập tên chip">
+                                    <span class="form-message"></span>
+                                </div>
+                                <div class="product-specs-input">
+                                    <label for="ram" class="specs-label">RAM: </label>
+                                    <input type="text" id="ram" class="specs-input" placeholder="Nhập dung lượng RAM">
+                                    <span class="form-message"></span>
+                                </div>
+                                <div class="product-specs-input">
+                                    <label for="storage" class="specs-label">Dung lượng: </label>
+                                    <input type="text" id="storage" class="specs-input" placeholder="Nhập dung lượng của điện thoại">
+                                    <span class="form-message"></span>
+                                </div>
+                                <div class="product-specs-input">
+                                    <label for="screen" class="specs-label">Màn hình: </label>
+                                    <input type="text" id="screen" class="specs-input" placeholder="Nhập kích thước màn hình">
+                                    <span class="form-message"></span>
+                                </div>
+                                <div class="product-specs-input">
+                                    <label for="rearCam" class="specs-label">Camera sau: </label>
+                                    <input type="text" id="rearCam" class="specs-input" placeholder="Nhập độ phân giải camera sau">
+                                    <span class="form-message"></span>
+                                </div>
+                                <div class="product-specs-input">
+                                    <label for="frontCam" class="specs-label">Camera trước: </label>
+                                    <input type="text" id="frontCam" class="specs-input" placeholder="Nhập độ phân giải camera trước">
+                                    <span class="form-message"></span>
+                                </div>
+                                <div class="product-specs-input">
+                                    <label for="battery" class="specs-label">Pin: </label>
+                                    <input type="text" id="battery" class="specs-input" placeholder="Nhập dung lượng pin">
+                                    <span class="form-message"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="form-submit btn-add-product-form add-product" id="add-product-btn">
+                            <i class="fa-regular fa-plus"></i>
+                            <span>THÊM SẢN PHẨM</span>
+                        </button>
+                        <button class="form-submit btn-update-product-form edit-product" id="update-product-btn">
+                            <i class="fa-regular fa-check"></i>
+                            <span>LƯU THAY ĐỔI</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End: Add product modal -->
+
+    <!-- Start: Modal product specs detail -->
+    <div class="modal detail-specs">
+        <div class="modal-container mdl-cnt">
+            <h3 class="modal-container-title">Cấu hình chi tiết</h3>
+            <button class="form-close modal-close">
+                <i class="fa-regular fa-xmark"></i>
+            </button>
+            <div class="detail-specs-content">
+                <!-- Javascript -->
+            </div>
+        </div>
+    </div>
+    <!-- End: Modal product specs detail -->
+
+    <!-- Start: Modal Edit & Add account -->
+    <div class="modal signup">
+        <div class="modal-container">
+            <h3 class="modal-container-title add-account">THÊM KHÁCH HÀNG MỚI</h3>
+            <h3 class="modal-container-title edit-account">CHỈNH SỬA THÔNG TIN</h3>
+            <button class="modal-close">
+                <i class="fa-regular fa-xmark"></i>
+            </button>
+            <div class="form-content signup-from">
+                <form action="" class="signup-form">
+                    <div class="form-group">
+                        <label for="fullname" class="form-label">Họ và tên</label>
+                        <input type="text"
+                               name="fulname"
+                               id="fullname"
+                               class="form-control"
+                               placeholder="VD: Nguyễn Phạm Quỳnh Hương"
+                        >
+                        <span class="form-message-name form-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Số điện thoại</label>
+                        <input type="tel"
+                               name="phone"
+                               id="phone"
+                               class="form-control"
+                               placeholder="Nhập số điện thoại"
+                        >
+                        <span class="form-message-phone form-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="form-label">Mật khẩu</label>
+                        <input type="text"
+                               name="password"
+                               id="password"
+                               class="form-control"
+                               placeholder="Nhập mật khẩu"
+                        >
+                        <span class="form-message-password form-message"></span>
+                    </div>
+                    <div class="form-group edit-account">
+                        <label for="" class="form-label">Trạng thái</label>
+                        <input type="checkbox"
+                               id="user-status-input"
+                               class="switch-input"
+                        >
+                        <label for="user-status-input" class="switch"></label>
+                    </div>
+                    <button class="form-submit add-account" id="signup-btn">
+                        <i class="fa-regular fa-user-plus"></i>
+                        Đăng ký
+                    </button>
+                    <button class="form-submit edit-account" id="btn-update-account">
+                        <i class="fa-regular fa-floppy-disk-pen"></i>
+                        Lưu thông tin
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End: Modal Edit & Add account -->
+
+    <!-- Start: Modal Order Detail -->
+    <div class="modal detail-order">
+        <div class="modal-container">
+            <h3 class="modal-container-title">
+                CHI TIẾT ĐƠN HÀNG
+            </h3>
+            <button class="modal-close">
+                <i class="fa-regular fa-xmark"></i>
+            </button>
+            <div class="modal-detail-order">
+                <!--   Javascript   -->
+            </div>
+            <div class="modal-detail-bottom">
+                <!--   Javascript   -->
+
+            </div>
+        </div>
+    </div>
+    <!-- End: Modal Order Detail -->
+
+    <!-- Start: Toast message -->
+    <div id="toast"></div>
+    <!-- End: Toast message -->
+
+    <!-- Start: Back to top button -->
+    <div class="back-to-top">
+        <a href="#">
+            <i class="fa-regular fa-arrow-up"></i>
+        </a>
+    </div>
+    <!-- End: Back to top button -->
+
+    <!-- Link: JavaScript-->
+    <script src="./js/admin.js"></script>
+    <script src="./js/toast-msg.js"></script>
+</body>
+</html>
