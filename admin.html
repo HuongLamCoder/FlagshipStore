@@ -575,8 +575,13 @@
     <!-- Start: Modal report - order product detail -->
     <div class="modal product-order-detail">
         <div class="modal-container">
-            <div class="modal-close">
-                <i class="fa-regular fa-xmark"></i>
+            <div class="product-order-detail-header">
+                <button class="modal-close">
+                    <i class="fa-regular fa-xmark"></i>
+                </button>
+                <div class="product-order-detail-h">
+                    <h2>Thông tin các đơn hàng</h2>
+                </div>
             </div>
             <div class="table">
                 <table width="100%">
@@ -584,13 +589,13 @@
                     <tr>
                         <td>Mã đơn hàng</td>
                         <td>Số lượng</td>
+                        <td>Đơn giá</td>
                         <td>Doanh thu</td>
                         <td>Ngày đặt hàng</td>
                     </tr>
                     </thead>
                     <tbody id="show-product-order-detail">
                         <!--   JavaScript   -->
-
                     </tbody>
                 </table>
             </div>

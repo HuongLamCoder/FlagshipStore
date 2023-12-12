@@ -1238,7 +1238,7 @@ function showOverview(arr) {
 }
 
 function showReports(arr, mode) {
-    // console.log(arr);
+    console.log(arr);
     let orderHTML = '';
     let mergeObject = mergeObjectReport(arr);
     showOverview(mergeObject);
@@ -1273,7 +1273,7 @@ function showReports(arr, mode) {
                 <td>${mergeObject[i].quantity}</td>
                 <td>${vndFormat(mergeObject[i].revenue)}</td>
                 <td>
-                    <button class="detail-btn product-order-detail" data-id="${mergeObject[i].productId}">
+                    <button class="detail-btn product-order-detail-btn" data-id="${mergeObject[i].productId}">
                         <i class="fa-regular fa-eye"></i>
                         Chi tiết
                     </button>
@@ -1282,6 +1282,35 @@ function showReports(arr, mode) {
         `;
     }
     document.getElementById('show-report').innerHTML = orderHTML;
+    //Xem các đơn hàng của sản phẩm
+    document.querySelectorAll('.product-order-detail-btn').forEach(element => {
+        let productId = parseInt(element.getAttribute('data-id'));
+        element.addEventListener('click', () => {
+            showProductOrderDetail(arr, productId); 
+        });
+    });
 }
 showReports(createObj());
+
+    //Hiển thị danh sách các đơn hàng của sản phẩm
+function showProductOrderDetail(arr, id) {
+    let orderHTML = '';
+    arr.forEach(item => {
+        console.log(item)
+         if(item.productId === id) {
+             orderHTML += `
+                <tr>
+                    <td>${item.orderId}</td>
+                    <td>${item.quantity}</td>
+                    <td>${vndFormat(item.price)}</td>
+                    <td>${vndFormat(item.price * item.quantity)}</td>
+                    <td>${dateFormat(item.orderTime)}</td>
+                </tr>
+             `;
+         }
+    });
+    document.getElementById('show-product-order-detail').innerHTML = orderHTML;
+    document.querySelector('.modal.product-order-detail').classList.add('open');
+    body.style.overflow = 'hidden';
+}
 // End: Sale report (statistical)

@@ -1335,9 +1335,22 @@ tbody tr td {
 /* End: Section - Sales reports */
 
 /* Start: Modal - Product order detail */
-.modal.detail-order-product .modal-container {
+.modal.product-order-detail .modal-container {
     width: 800px;
-    overflow: hidden;
+    height: 450px;
+    overflow: auto;
+}
+
+.modal.product-order-detail table {
+    margin-top: 60px;
+    border-radius: 0;
+}
+
+.product-order-detail-h {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    text-transform: uppercase;
 }
 /* End: Modal - Product order detail */
 
