@@ -1212,7 +1212,7 @@ function mergeObjectReport(arr) {
 
     //Hàm thống kê số lượng sản phẩm đã bán, doanh thu, đơn hàng chưa xử lý, đơn hàng đã xử lý
 function countOrderStatus() {
-    let orders = JSON.parse(localStorage.getItem('orders'));
+    let orders = localStorage.getItem('orders') ? JSON.parse(localStorage.getItem('orders')) : [];
     let orderQty = {
         completed: 0,
         notCompleted: 0
