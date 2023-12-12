@@ -1119,3 +1119,169 @@ function changeOrderStatus(id, element) {
     showOrder(orders);
 }
 // End: Order
+
+// Start: Sale report (statistical)
+    //Tạo một đối tượng để lưu các thông tin sản phẩm đã được mua
+function createObj() {
+    let orders = localStorage.getItem('orders') ? JSON.parse(localStorage.getItem('orders')) : [];
+    let orderDetails = localStorage.getItem('orderDetails') ? JSON.parse(localStorage.getItem('orderDetails')) : [];
+    let products = localStorage.getItem('products') ? JSON.parse(localStorage.getItem('products')) : [];
+    let objArr = [];    //Mảng chứa tất cả sản phẩm trong orderDetails
+    
+    orderDetails.forEach(orderDetail => {
+         let product = products.find(product => orderDetail.productId === product.productId);
+         let object = {};
+         object.productId = orderDetail.productId;
+         object.orderId = orderDetail.orderId;
+         object.price = orderDetail.price;
+         object.quantity = orderDetail.productQty;
+         object.category = product.productBrand;
+         object.name = product.productName;
+         object.image = product.productImg;
+         object.orderTime = (orders.find(order => order.orderId === orderDetail.orderId)).orderTime;
+         objArr.push(object);
+    });
+    return objArr;
+}
+
+    //Hiển thị thống kê theo tìm kiếm
+function searchReports(mode) {
+    let categoryValue = document.getElementById('report-category').value;
+    let searchInputValue = document.getElementById('form-search-report').value;
+    let dateStart = document.getElementById('time-start-report').value;
+    let dateEnd = document.getElementById('time-end-report').value;
+
+    if (dateStart > dateEnd && dateStart !== '' && dateEnd !== '') {
+        toast({
+            title: 'Chú ý',
+            message: 'Vui lòng chọn ngày tháng tìm kiếm hợp lệ',
+            type: 'warning',
+            duration: 3000
+        });
+        return;
+    }
+
+    let detailArr = createObj();
+    let result = categoryValue === 'Tất cả' ? detailArr : detailArr.filter(item => {
+        return item.category === categoryValue;
+    });
+
+    result = searchInputValue === '' ? result : result.filter(item => {
+        return item.name.toLowerCase().includes(searchInputValue.toLowerCase());
+    });
+
+    if(dateStart !== '' && dateEnd === '') {
+        result = result.filter(item => {
+            return new Date(item.orderTime) >= new Date(dateStart).setHours(0, 0, 0);
+        });
+    }
+    else if(dateStart === '' && dateEnd !== '') {
+        result = result.filter(item => {
+            return new Date(item.orderTime) <= new Date(dateEnd).setHours(23, 59, 59);
+        });
+    }
+    else if(dateStart !== '' && dateEnd !== '') {
+        result = result.filter(item => {
+            return  ((new Date(item.orderTime) >= new Date(dateStart).setHours(0, 0, 0))
+                    &&
+                    (new Date(item.orderTime) <= new Date(dateEnd).setHours(23, 59, 59)));
+        });
+    }
+    //Hiển thị bảng thống kê
+    showReports(result, mode);
+}
+    //Hàm tổng hợp số liệu của các sản phẩm
+function mergeObjectReport(arr) {
+    let result = [];
+    arr.forEach(item => {
+        //Tìm kiếm các sản phẩm giống nhau
+        //Không có thì trả về undefined
+        let check = result.find(i => i.productId === item.productId);
+        if(check) {
+            check.quantity = parseInt(check.quantity) + parseInt(item.quantity);    //Tính tổng số lượng đã bán của các sản phẩm trùng nhau
+            check.revenue += parseInt(item.price) * parseInt(item.quantity);    //Thêm thuộc tính revenue (doanh thu)
+        }
+        else {
+            const newItem = {...item};
+            newItem.revenue = newItem.price * newItem.quantity;
+            result.push(newItem);
+        }
+    });
+    return result;
+}
+
+    //Hàm thống kê số lượng sản phẩm đã bán, doanh thu, đơn hàng chưa xử lý, đơn hàng đã xử lý
+function countOrderStatus() {
+    let orders = JSON.parse(localStorage.getItem('orders'));
+    let orderQty = {
+        completed: 0,
+        notCompleted: 0
+    };
+    orders.reduce((acc, order) => {
+        if(order.orderStatus === 0) {
+            acc.notCompleted++;
+        }
+        else if(order.orderStatus === 1) {
+            acc.completed++;
+        }
+        return acc;
+    }, orderQty);
+    return orderQty;
+}
+
+    //Hàm show thống kê tổng quan
+function showOverview(arr) {
+    document.getElementById('revenue').innerText = vndFormat(arr.reduce((sum, curr) => (sum + parseInt(curr.revenue)), 0));
+    document.getElementById('quantity-product').innerText = arr.reduce((sum, curr) => (sum + parseInt(curr.quantity)), 0);
+    document.getElementById('quantity-not-completed-order').innerText = countOrderStatus().notCompleted;
+    document.getElementById('quantity-completed-order').innerText = countOrderStatus().completed;
+}
+
+function showReports(arr, mode) {
+    // console.log(arr);
+    let orderHTML = '';
+    let mergeObject = mergeObjectReport(arr);
+    showOverview(mergeObject);
+    
+    switch(mode) {
+        case 0: //Ấn nút reset
+            mergeObject = mergeObjectReport(createObj());
+            showOverview(mergeObject);
+            document.getElementById('report-category').value = 'Tất cả';
+            document.getElementById('form-search-report').value = '';
+            document.getElementById('time-start-report').value = '';
+            document.getElementById('time-end-report').value = '';
+            break;
+        case 1: //Ấn nút sắp xếp tăng dần
+            mergeObject.sort((a, b) => parseInt(a.quantity) - parseInt(b.quantity));
+            break;
+        case 2: //Ấn nút sắp xếp giảm dần
+            mergeObject.sort((a, b) => parseInt(b.quantity) - parseInt(a.quantity));
+            break;
+    }
+    //Hiển thị các dòng sản phẩm đã được mua
+    for(let i = 0; i < mergeObject.length; i++) {
+        orderHTML += `
+            <tr>
+                <td>${i + 1}</td>
+                <td>
+                    <div class="product-img-title">
+                        <img src="${mergeObject[i].image}" alt="" class="product-img-table">
+                        <p>${mergeObject[i].name}</p>
+                    </div>
+                </td>
+                <td>${mergeObject[i].quantity}</td>
+                <td>${vndFormat(mergeObject[i].revenue)}</td>
+                <td>
+                    <button class="detail-btn product-order-detail" data-id="${mergeObject[i].productId}">
+                        <i class="fa-regular fa-eye"></i>
+                        Chi tiết
+                    </button>
+                </td>
+            </tr>
+        `;
+    }
+    document.getElementById('show-report').innerHTML = orderHTML;
+}
+showReports(createObj());
+// End: Sale report (statistical)

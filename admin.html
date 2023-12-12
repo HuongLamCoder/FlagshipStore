@@ -271,6 +271,111 @@
                     </table>
                 </div>
             </div>
+            <!-- Sales reports (thống kê) -->
+            <div class="section">
+                <div class="order-statistical" id="order-statistical">
+                    <div class="order-statistical-item doanh-thu">
+                        <div class="order-statistic-item-icon">
+                            <i class="fa-regular fa-credit-card"></i>
+                        </div>
+                        <div class="order-statistic-item-content">
+                            <p class="order-statistical-item-content-desc">Doanh thu</p>
+                            <h4 class="order-statistical-item-content-h" id="revenue">13.122.004 đ</h4>
+                        </div>
+                    </div>
+                    <div class="order-statistical-item sl-da-ban">
+                        <div class="order-statistic-item-icon">
+                            <i class="fa-regular fa-file-chart-column"></i>
+                        </div>
+                        <div class="order-statistic-item-content">
+                            <p class="order-statistical-item-content-desc">Số lượng đã bán</p>
+                            <h4 class="order-statistical-item-content-h" id="quantity-product">2004</h4>
+                        </div>
+                    </div>
+                    <div class="order-statistical-item dh-chua-xl">
+                        <div class="order-statistic-item-icon">
+                            <i class="fa-regular fa-truck-clock"></i>
+                        </div>
+                        <div class="order-statistic-item-content">
+                            <p class="order-statistical-item-content-desc">Đơn hàng chưa xử lý</p>
+                            <h4 class="order-statistical-item-content-h" id="quantity-not-completed-order">13</h4>
+                        </div>
+                    </div>
+                    <div class="order-statistical-item dh-da-xl">
+                        <div class="order-statistic-item-icon">
+                            <i class="fa-regular fa-box-circle-check"></i>
+                        </div>
+                        <div class="order-statistic-item-content">
+                            <p class="order-statistical-item-content-desc">Đơn hàng đã xử lý</p>
+                            <h4 class="order-statistical-item-content-h" id="quantity-completed-order">12</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-control">
+                    <div class="admin-control-left">
+                        <select name="report-category" id="report-category" onchange="searchReports()">
+                            <option>Tất cả</option>
+                            <option>Samsung</option>
+                            <option>Apple</option>
+                            <option>Oppo</option>
+                            <option>Xiaomi</option>
+                            <option>Huawei</option>
+                        </select>
+                    </div>
+                    <div class="admin-control-center">
+                        <form action="" class="form-search">
+                            <span class="search-btn">
+                                <i class="fa-light fa-magnifying-glass"></i>
+                            </span>
+                            <input
+                                    type="text"
+                                    class="form-search-input"
+                                    id="form-search-report"
+                                    placeholder="Tìm kiếm tên sản phẩm"
+                                    oninput="searchReports()"
+                            >
+                        </form>
+                    </div>
+                    <div class="admin-control-right">
+                        <form action="" class="filter-date">
+                            <div>
+                                <label for="time-start-user">Từ</label>
+                                <input type="date" class="form-control-date" id="time-start-report" onchange="searchReports()">
+                            </div>
+                            <div>
+                                <label for="time-end-user">Đến</label>
+                                <input type="date" class="form-control-date" id="time-end-report" onchange="searchReports()">
+                            </div>
+                        </form>
+                        <button class="btn-reset-order sort-asc-btn" onclick="searchReports(1)">
+                            <i class="fa-regular fa-arrow-up-short-wide"></i>
+                        </button>
+                        <button class="btn-reset-order sort-desc-btn" onclick="searchReports(2)">
+                            <i class="fa-regular fa-arrow-down-wide-short"></i>
+                        </button>
+                        <button class="btn-reset-order" onclick="searchReports(0)">
+                            <i class="fa-light fa-arrow-rotate-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="table">
+                    <table width="100%">
+                        <thead>
+                        <tr>
+                            <td>STT</td>
+                            <td>Tên sản phẩm</td>
+                            <td>Số lượng đã bán</td>
+                            <td>Doanh thu</td>
+                            <td></td>
+                        </tr>
+                        </thead>
+                        <tbody id="show-report">
+                        <!--   JavaScript   -->
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </main>
     </div>
     <!-- End: Side bar Menu -->
@@ -467,6 +572,32 @@
     </div>
     <!-- End: Modal Edit & Add account -->
 
+    <!-- Start: Modal report - order product detail -->
+    <div class="modal product-order-detail">
+        <div class="modal-container">
+            <div class="modal-close">
+                <i class="fa-regular fa-xmark"></i>
+            </div>
+            <div class="table">
+                <table width="100%">
+                    <thead>
+                    <tr>
+                        <td>Mã đơn hàng</td>
+                        <td>Số lượng</td>
+                        <td>Doanh thu</td>
+                        <td>Ngày đặt hàng</td>
+                    </tr>
+                    </thead>
+                    <tbody id="show-product-order-detail">
+                        <!--   JavaScript   -->
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- End: Modal report - order product detail -->
+
     <!-- Start: Modal Order Detail -->
     <div class="modal detail-order">
         <div class="modal-container">
@@ -486,6 +617,8 @@
         </div>
     </div>
     <!-- End: Modal Order Detail -->
+
+
 
     <!-- Start: Toast message -->
     <div id="toast"></div>

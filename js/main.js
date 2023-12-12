@@ -100,8 +100,11 @@ signupButton.addEventListener('click', () => {
     let passwordUser = document.getElementById('password').value;
     let passwordConfirm = document.getElementById('password_confirmation').value;
     let checkSignup = document.getElementById('checkbox-signup').checked;
-
     //Kiểm tra hợp lệ
+    let validName = false;
+    let validPhone = false;
+    let validPassword = false;
+    let validConfirmPassword = false;
     if(fullnameUser === '') {   //nếu tên rỗng
         document.querySelector('.form-message-name').innerHTML = "Vui lòng nhập họ và tên";
         //focus lại khung input name
@@ -114,6 +117,7 @@ signupButton.addEventListener('click', () => {
     else {
         //Xóa thông báo lỗi đã hiển thị trước đó
         document.querySelector('.form-message-name').innerHTML = '';
+        validName = true;
     }
 
     let phoneReg = /^0[0-9]{9,10}$/;
@@ -127,6 +131,7 @@ signupButton.addEventListener('click', () => {
     }
     else {
         document.querySelector('.form-message-phone').innerHTML = '';
+        validPhone = true;
     }
 
     if(passwordUser === '') {   //nếu mật khẩu rỗng
@@ -139,6 +144,7 @@ signupButton.addEventListener('click', () => {
     }
     else {
         document.querySelector('.form-message-password').innerHTML = '';
+        validPassword = true;
     }
 
     if(passwordConfirm === '') {   //nếu mật khẩu rỗng
@@ -151,6 +157,7 @@ signupButton.addEventListener('click', () => {
     }
     else {
         document.querySelector('.form-message-password-confirm').innerHTML = '';
+        validConfirmPassword = true;
     }
 
     if(!checkSignup) {
@@ -161,7 +168,7 @@ signupButton.addEventListener('click', () => {
     }
 
     //Nếu tất cả điều kiện đều hợp lệ thì tạo 1 đối tượng user
-    if(fullnameUser && phoneUser && passwordUser && passwordConfirm && checkSignup) {
+    if(validName && validPhone && validPassword && validConfirmPassword && checkSignup) {
         if(passwordUser === passwordConfirm) {
             let user = {
                 fullname: fullnameUser,
@@ -226,6 +233,8 @@ loginButton.addEventListener('click', () => {
 
     let phoneReg = /^0[0-9]{9,10}$/;
     //Kiểm tra hợp lệ
+    let validPhone = false;
+    let validPassword = false;
     if(phoneLogin === '') {
         document.querySelector('.form-message.phonelog').innerHTML = "Vui lòng nhập số điện thoại";
         document.getElementById('phone-login').focus();
@@ -236,6 +245,7 @@ loginButton.addEventListener('click', () => {
     }
     else {
         document.querySelector('.form-message.phonelog').innerHTML = '';
+        validPhone = true;
     }
 
     if(passwordLogin === '') {
@@ -248,9 +258,10 @@ loginButton.addEventListener('click', () => {
     }
     else {
         document.querySelector('.form-message-check-login').innerHTML = '';
+        validPassword = true;
     }
 
-    if(phoneLogin && passwordLogin) {
+    if(validPhone && validPassword) {
         //Tìm vị trí của user trong mảng accounts
         let viTri = accounts.findIndex(account => account.phoneNumber === phoneLogin);
 
@@ -266,7 +277,7 @@ loginButton.addEventListener('click', () => {
             //Kiểm tra xem tài khoản có bị khóa hay không
             if(accounts[viTri].status === 0) {
                 toast({
-                    title: 'Cảnh báo',
+                    title: 'Không thể đăng nhập',
                     message: 'Tài khoản của bạn đã bị khóa!',
                     type: 'warning',
                     duration: 3000

@@ -968,7 +968,7 @@ input[type="file"] {
 }
 
 .admin-control-right .btn-reset-order i {
-    transition: 0.4s;
+    transition: 0.3s;
 }
 
 .admin-control-right .btn-reset-order:hover {
@@ -1249,4 +1249,95 @@ tbody tr td {
     opacity: 0.8;
 }
 /* End: Modal - Order detail */
+
+/* Start: Section - Sales reports */
+.btn-reset-order.sort-asc-btn:hover i,
+.btn-reset-order.sort-desc-btn:hover i{
+    transform: rotate(0);
+}
+
+.btn-reset-order.sort-asc-btn:hover i {
+    margin-bottom: 8px;
+}
+
+.btn-reset-order.sort-desc-btn:hover i {
+    margin-top: 8px;
+}
+
+.order-statistical {
+    display: flex;
+    margin: 30px 0;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.order-statistical-item {
+    width: calc(50% - 10px);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    box-shadow: 0 1px 5px 2px #f1f1f1;
+    border-radius: 10px;
+    height: 100px;
+    color: var(--white-color);
+}
+
+.order-statistical-item.doanh-thu {
+    background: linear-gradient(45deg, #0551fa, #030375);
+}
+
+.order-statistical-item.sl-da-ban {
+    background: linear-gradient(45deg, #9d03d6, #330842);
+}
+
+.order-statistical-item.dh-chua-xl {
+    background: linear-gradient(45deg, #ff6000, #aa2b02);
+}
+
+.order-statistical-item.dh-da-xl {
+    background: linear-gradient(45deg, #03bc6e, #005331);
+}
+
+.order-statistic-item-icon i {
+    font-size: 50px;
+}
+
+.order-statistic-item-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-statistical-item-content-desc {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.order-statistical-item-content-h {
+    font-size: 24px;
+}
+
+.product-img-title {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+ }
+
+.product-img-table {
+    width: 40px;
+    object-fit: cover;
+
+}
+/* End: Section - Sales reports */
+
+/* Start: Modal - Product order detail */
+.modal.detail-order-product .modal-container {
+    width: 800px;
+    overflow: hidden;
+}
+/* End: Modal - Product order detail */
 

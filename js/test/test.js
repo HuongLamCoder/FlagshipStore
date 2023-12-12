@@ -23,3 +23,4 @@ var lcobj = JSON.parse(localStorage.getItem('object'));
 console.log(lcobj.age === 20);
 */
 
+//Kiểm tra biểu thức chính quy
