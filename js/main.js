@@ -470,7 +470,7 @@ function paginationChange(page, productAll, currentPage) {
         node.classList.add('active');
     }
     node.addEventListener('click', () => {
-        //Khi click vào 1 trang khác tranh hiện tại thì cập nhật lại currentPage
+        //Khi click vào 1 trang khác trang hiện tại thì cập nhật lại currentPage
         currentPage = page;
         //Hiển thị sản phẩm
         displayListProducts(productAll, perPage, currentPage);

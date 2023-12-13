@@ -1153,9 +1153,14 @@ h2.product-title::after {
     border: 1px solid #ddd;
 }
 /* Ẩn dấu mũi tên lên xuống của thẻ input có type là number */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
+    -moz-appearance: none;
     margin: 0;
 }
 
