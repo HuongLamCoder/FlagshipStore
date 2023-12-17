@@ -158,43 +158,50 @@ let totalPage = 0;
 let productPerPage = [];
 
     //Phân trang cho mảng sản phẩm
-function showProductPerPage(productAll, perPage, currentPage) {
+function showProductPerPage(products, perPage, currentPage) {
     let start = (currentPage - 1) * perPage;
     let end = start + perPage;
-    let productInPage = productAll.slice(start, end);
-    showListProduct(productInPage);
+    productPerPage = products.slice(start, end);
+    console.log(productPerPage);
+    showListProduct(productPerPage);
 }
 
     //Hiển thị pagination
-function paginationChange(page, productAll, currentPage) {
-    let node = document.createElement(`li`);
-    node.classList.add('page-nav-item');
-    node.innerHTML = `<a href="javascript:">${page}</a>`;
+function activePagination(page, products, currentPage) {
+    let paginationItem = document.createElement(`li`);
+    paginationItem.classList.add('page-nav-item');
+    paginationItem.innerHTML = `<a href="javascript:">${page}</a>`;
     if(currentPage === page) {
-        node.classList.add('active');
+        paginationItem.classList.add('active');
     }
-    node.addEventListener('click', () => {
+    paginationItem.addEventListener('click', () => {
         currentPage = page;
-        showProductPerPage(productAll, perPage, currentPage);
+        showProductPerPage(products, perPage, currentPage);
         let currentActivePages = document.querySelectorAll('.page-nav-item.active');
         for(let i = 0; i < currentActivePages.length; i++) {
             currentActivePages[i].classList.remove('active');
         }
-        node.classList.add('active');
+        paginationItem.classList.add('active');
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
     });
-    return node;
+    return paginationItem;
 }
 
     //Pagination
-function pagination(productAll, perPage) {
+function pagination(products, perPage) {
     document.querySelector('.page-nav-list').innerHTML = '';
-    let pageCount = Math.ceil(productAll.length / perPage);
-    for(let i = 1; i <= pageCount; i++) {
-        let li = paginationChange(i, productAll, currentPage);
+    let remainder = products.length % perPage;
+    if(remainder === 0) {
+        totalPage = products.length / perPage
+    }
+    else {
+        totalPage = (products.length - remainder) / perPage + 1;
+    }
+    for(let page = 1; page <= totalPage; page++) {
+        let li = activePagination(page, products, currentPage);
         document.querySelector('.page-nav-list').appendChild(li);
     }
 }
@@ -215,7 +222,7 @@ function showProducts() {
     });
     
     showProductPerPage(result, perPage, currentPage);
-    pagination(result, perPage, currentPage);
+    pagination(result, perPage);
 }
 
 window.onload = showProducts();
@@ -233,7 +240,6 @@ function refreshProduct() {
 function hideProduct(id) {
     let products = JSON.parse(localStorage.getItem('products'));
     let index = products.findIndex(product => product.productId === id);
-    console.log(index);
     if(confirm('Bạn chắc chắn muốn ẩn sản phẩm này?') === true) {
         products[index].productStatus = 0;
         toast({
@@ -287,7 +293,6 @@ function editProduct(id) {
     let products = JSON.parse(localStorage.getItem('products'));
     let index = products.findIndex(product => product.productId === id);
     currentIndex = index;
-    console.log(currentIndex);
     body.style.overflow = 'hidden';
     //Ần các phần tử thuộc về phần thêm sản phẩm mới
     document.querySelectorAll('.add-product').forEach(item => {
@@ -622,7 +627,7 @@ function showListUser(arr) {
                         <button class="edit-btn" id="edit-account" onclick="openEditAccount('${account.phoneNumber}')">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>
-                        <button class="delete-btn" id="delete-account" onclick="deleteAccount(${account.phoneNumber})">
+                        <button class="delete-btn" id="delete-account" onclick="deleteAccount('${account.phoneNumber}')">
                             <i class="fa-regular fa-trash"></i>
                         </button>
                     </td>
@@ -707,7 +712,7 @@ function deleteAccount(phone) {
 }
 
     //Reset signup form
-function signupFromReset() {
+function signupFormReset() {
     document.getElementById('fullname').value = ""
     document.getElementById('phone').value = ""
     document.getElementById('password').value = ""
@@ -716,7 +721,7 @@ function signupFromReset() {
     document.querySelector('.form-message-password').innerHTML = '';
 }
 document.querySelector('.modal.signup .modal-close').addEventListener('click', () => {
-    signupFromReset();
+    signupFormReset();
 });
 
     //Mở modal thêm khách hàng mới
@@ -739,6 +744,9 @@ addAccount.addEventListener('click', (e) => {
     let phoneUser = document.getElementById('phone').value;
     let passwordUser = document.getElementById('password').value;
         //Check validate
+        let validName = false;
+        let validPhone = false;
+        let validPasword = false;
         let fullnameInput = document.getElementById('fullname');
         let formNameMsg = document.querySelector('.form-message-name');
         let formPhoneMsg = document.querySelector('.form-message-phone');
@@ -754,6 +762,7 @@ addAccount.addEventListener('click', (e) => {
         }
         else {
             formNameMsg.innerHTML = '';
+            validName = true;
         }
 
         if (phoneUser === '') {
@@ -766,6 +775,7 @@ addAccount.addEventListener('click', (e) => {
         }
         else {
             formPhoneMsg.innerHTML = '';
+            validPhone = true;
         }
 
         if (passwordUser.length === 0) {
@@ -776,9 +786,10 @@ addAccount.addEventListener('click', (e) => {
         }
         else {
             formPasswordMsg.innerHTML = '';
+            validPasword = true;
         }
 
-    if (fullnameUser && phoneUser && passwordUser) {
+    if (validName && validPhone && validPasword) {
         let user = {
             fullname: fullnameUser,
             phoneNumber: phoneUser,
@@ -803,7 +814,7 @@ addAccount.addEventListener('click', (e) => {
             });
             document.querySelector('.signup').classList.remove('open');
             showUser();
-            signupFromReset();
+            signupFormReset();
         }
         else {
             toast({
@@ -821,7 +832,6 @@ let updateAccount = document.getElementById('btn-update-account');
     //Mở modal chỉnh sửa tài khoản
 let indexFlag;
 function openEditAccount(phone) {
-    console.log(phone);
     document.querySelector('.signup').classList.add('open');
     document.querySelectorAll('.edit-account').forEach(item => {
         item.style.display = 'block';
@@ -838,7 +848,7 @@ function openEditAccount(phone) {
     document.getElementById('fullname').value = accounts[index].fullname;
     document.getElementById('phone').value = accounts[index].phoneNumber;
     document.getElementById('password').value = accounts[index].password;
-    document.getElementById('user-status-input').checked = accounts[index].status === 1 ? true : false;
+    document.getElementById('user-status-input').checked = accounts[index].status === 1 ? 1 : 0;
 }
     //Ấn nút updateAccount
 updateAccount.addEventListener('click', (e) => {
@@ -877,7 +887,7 @@ updateAccount.addEventListener('click', (e) => {
             duration: 2000
         });
         document.querySelector('.signup').classList.remove('open');
-        signupFromReset();
+        signupFormReset();
         showUser();
     }
 });
@@ -1238,7 +1248,6 @@ function showOverview(arr) {
 }
 
 function showReports(arr, mode) {
-    console.log(arr);
     let orderHTML = '';
     let mergeObject = mergeObjectReport(arr);
     showOverview(mergeObject);
@@ -1296,7 +1305,6 @@ showReports(createObj());
 function showProductOrderDetail(arr, id) {
     let orderHTML = '';
     arr.forEach(item => {
-        console.log(item)
          if(item.productId === id) {
              orderHTML += `
                 <tr>

@@ -7,8 +7,8 @@
     border-left: 4px solid;
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
     padding: 20px 0;
-    min-width: 400px;
-    max-width: 450px;
+    min-width: 350px;
+    max-width: 350px;
     transition: all linear 0.3s;
     /* animation: slideInLeft 0.3s ease, fadeOut linear 1s 3s forwards; */
     /*                                   !* sau 3s thì mờ đi trong vòng 1 giây, forwards: dừng ở điểm cuối của animation *! */

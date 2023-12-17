@@ -26,6 +26,99 @@ window.addEventListener('scroll', () => {
     lastScrollY = window.scrollY;
 });
 
+// Start: Home slider
+window.addEventListener('load', () => {
+     const slider = document.querySelector('.home-slider');
+     const sliderMain = document.querySelector('.slider-main');
+     const sliderItems = document.querySelectorAll('.slider-item');
+     const prevBtn = document.querySelector('.slider-prev');
+     const nextBtn = document.querySelector('.slider-next');
+     const dotItems = document.querySelectorAll('.slider-dot-item');
+     const sliderItemWidth = sliderItems[0].offsetWidth;    //lấy độ rộng phần tử
+     console.log('sliderItemWidth: ' + sliderItemWidth);
+     const slidesLength = sliderItems.length;
+     let positionX = 0;
+     let index = 0;
+     
+     nextBtn.addEventListener('click', () => {
+         handleChangeSlide(1)
+     });
+
+    prevBtn.addEventListener('click', () => {
+        handleChangeSlide(-1)
+    });
+    
+    //Di chuyền slider khi người dùng ấn vào các dots
+    dotItems.forEach((dotItem) => {
+        dotItem.addEventListener('click', () => {
+            const targetIndex = parseInt(dotItem.getAttribute('data-index'));
+            console.log('targetIndex: ' + targetIndex)
+            positionX = -targetIndex * sliderItemWidth;
+            console.log('positionX: ' + positionX);
+            sliderMain.style = `transform: translateX(${positionX}px)`;
+            index = targetIndex;
+            //Xóa class active của tất cả dotItem
+            dotItems.forEach((item) => {
+                item.classList.remove('active');
+            });
+            //Thêm class active vào dotItem hiện tại
+            dotItem.classList.add('active');
+        });
+    });
+    
+    function handleChangeSlide(mode) {
+        if(mode === 1) {    //next slide
+            if(index >= slidesLength - 1) {
+                index = 0;
+            }
+            else {
+                index++;
+            }
+        }
+        else if(mode === -1) {  //previous slide
+            if(index <= 0) {
+                index = slidesLength - 1;
+            }
+            else {
+                index--;
+            }
+        }
+        
+        positionX = -index * sliderItemWidth;
+        console.log('index: ' + index);
+        sliderMain.style = `transform: translateX(${positionX}px)`;
+        
+        //Cập nhật lại class active cho dot
+        dotItems.forEach((item, i) => {
+            //Nếu dotItem tương ứng với slider hiện tại thì sẽ được thêm vào class 'active' (nếu chưa có) hoặc giữ nguyên (nếu đã có)
+            //Nếu i !== index thì sẽ xóa bỏ class active (nếu có), nếu không có class active thì trạng thái không thay đổi
+            item.classList.toggle('active', i === index);
+        });
+    }
+    
+    //Tự động dịch chuyển slider
+    const slideDuration = 3000;
+    let autoSlide;
+    
+    //hàm để bắt đầu auto slide
+    function startAutoSlide() {
+        autoSlide = setInterval(() => {
+            handleChangeSlide(1);
+        }, slideDuration);
+    }
+    //Hàm để tạm dừng auto slide
+    function stopAutoSlide() {
+        clearInterval(autoSlide);
+    }
+    
+    //Bắt đầu auto slide khi trang được load
+    startAutoSlide();
+    
+    //Tạm dừng auto slide khi người dùng di chuột vào slider và tiếp tục khi người dùng di chuột khỏi slider
+    slider.onmouseover = stopAutoSlide;
+    slider.onmouseout = startAutoSlide;
+});
+// End: Home slider
 
 //Start: Close popup
 const body = document.querySelector('body');
@@ -449,14 +542,14 @@ function renderProducts(showProducts) {
 let perPage = 12;   //số sản phẩm hiển thị trên 1 trang
 let currentPage = 1;    //trang hiện tại
 let totalPage = 0;  //tổng số trang
-let perProducts = [];    //mảng chứa các sản phẩm hiển thị trên 1 trang
+let productShow = [];    //mảng chứa các sản phẩm hiển thị trên 1 trang
 
 function displayListProducts(productAll, perPage, currentPage) {
     let start = (currentPage - 1) * perPage;
     let end = start + perPage;
     //productShow: mảng chứa các sản phẩm hiển thị trên 1 trang
     //slice(): trả về 1 mảng mới chứa các phần tử được lấy ra từ mảng ban đầu
-    let productShow = productAll.slice(start, end);
+    productShow = productAll.slice(start, end);
     renderProducts(productShow);
 }
 
@@ -491,8 +584,8 @@ function pagination(productAll, perPage) {
     document.querySelector('.page-nav-list').innerHTML = '';
     //Tính tổng số trang
     //Math.ceil(): làm tròn lên
-    let page_count = Math.ceil(productAll.length / perPage);
-    for(let i = 1; i <= page_count; i++) {
+    totalPage = Math.ceil(productAll.length / perPage);
+    for(let i = 1; i <= totalPage; i++) {
         //Tạo nút phân trang và thêm vào ul có class là page-nav-list
         let li = paginationChange(i, productAll, currentPage);
         document.querySelector('.page-nav-list').appendChild(li);
@@ -503,7 +596,7 @@ function pagination(productAll, perPage) {
 function showHomeProducts(products) {
     let productAll = products.filter(item => parseInt(item.productStatus) === 1)
     displayListProducts(productAll, perPage, currentPage);
-    pagination(productAll, perPage, currentPage);
+    pagination(productAll, perPage);
 }
 window.onload = showHomeProducts(JSON.parse(localStorage.getItem('products')));
 // End: Pagination (phân trang)
@@ -739,8 +832,8 @@ function showCategory(category) {
     document.getElementById('home').classList.remove('hide');
     document.getElementById('order-history').classList.remove('open');
 
-    let productSearch = productAll.filter(value => {
-        return value.productBrand === category;
+    let productSearch = productAll.filter(product => {
+        return product.productBrand === category;
     });
     let currentPageSearch = 1;
     displayListProducts(productSearch, perPage, currentPageSearch);
@@ -942,7 +1035,7 @@ function showCart() {
 // End: Giỏ hàng
 
 // Start: Checkout
-const PHI_VAN_CHUYEN = 30000;
+const PHI_VAN_CHUYEN = 13124;
 let priceFinal = document.getElementById('checkout-cart-price-final');
 
     //Hiển thị sản phẩm trong giỏ hàng
@@ -1113,7 +1206,7 @@ function checkout(option, product) {
                 <div class="priceFlx">
                     <div class="text">
                         Tiền hàng
-                        <span class="count">${product.productQty} món</span>
+                        <span class="count">${product.productQty} sản phẩm</span>
                     </div>
                     <div class="price-detail">
                         <span id="checkout-cart-total">
@@ -1299,7 +1392,7 @@ function handlerOrder(product) {
         });
         setTimeout(() => {
             window.location = "./index.html";  //chuyển về trang chủ
-        }, 2000);
+        }, 1000);
     }
 }
 
@@ -1385,7 +1478,7 @@ function renderOrderHistory() {
                                     <i class="fa-light fa-pen"></i>
                                     ${productOrderDetail.productNote}
                                 </p>
-                                <p class="order-history-quantity">${productOrderDetail.productQty}x</p>
+                                <p class="order-history-quantity">Số lượng: ${productOrderDetail.productQty}</p>
                             </div>
                         </div>
                         <div class="order-history-right">

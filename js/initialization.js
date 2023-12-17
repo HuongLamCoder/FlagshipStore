@@ -826,8 +826,7 @@ function createProducts() {
         ];
 
         //Xáo trộn mảng sản phẩm
-        productArray.sort(() => Math.random() - 0.5);   //Math.random() trả về số ngẫu nhiên từ 0 đến 1, nếu số âm thì sẽ đổi chỗ 2 phần tử
-        //Cập nhật lại productId của mỗi sản phẩm = index + 1
+        productArray.sort(() => Math.random() - 0.5);
         productArray.forEach((product, index) => {
             product.productId = index + 1;
         });
