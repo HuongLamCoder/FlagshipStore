@@ -90,8 +90,7 @@ window.addEventListener('load', () => {
         
         //Cập nhật lại class active cho dot
         dotItems.forEach((item, i) => {
-            //Nếu dotItem tương ứng với slider hiện tại thì sẽ được thêm vào class 'active' (nếu chưa có) hoặc giữ nguyên (nếu đã có)
-            //Nếu i !== index thì sẽ xóa bỏ class active (nếu có), nếu không có class active thì trạng thái không thay đổi
+            //Nếu i === index: true thì thêm class active, false thì xóa class active
             item.classList.toggle('active', i === index);
         });
     }
