@@ -154,15 +154,12 @@ function showListProduct(products) {
     //Phân trang (pagination)
 let perPage = 8;
 let currentPage = 1;
-let totalPage = 0;
-let productPerPage = [];
 
     //Phân trang cho mảng sản phẩm
 function showProductPerPage(products, perPage, currentPage) {
     let start = (currentPage - 1) * perPage;
     let end = start + perPage;
-    productPerPage = products.slice(start, end);
-    console.log(productPerPage);
+    let productPerPage = products.slice(start, end);
     showListProduct(productPerPage);
 }
 
@@ -194,6 +191,7 @@ function activePagination(page, products, currentPage) {
 function pagination(products, perPage) {
     document.querySelector('.page-nav-list').innerHTML = '';
     let remainder = products.length % perPage;
+    let totalPage = 0;
     if(remainder === 0) {
         totalPage = products.length / perPage
     }

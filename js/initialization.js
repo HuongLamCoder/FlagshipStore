@@ -1,7 +1,7 @@
 //Tạo và lưu danh sách sản phẩm vào localStorage
 function createProducts() {
     if(localStorage.getItem('products') == null) {
-        let productArray = [
+        let products = [
             // Samsung
             {
                 productId: 1,
@@ -18,7 +18,8 @@ function createProducts() {
                     frontCam: '12 MP',
                     battery: '5000 mAh',
                 },
-                productPrice: 23990000
+                productPrice: 23990000,
+                releaseDate: '02/2023'
             },
             {
                 productId: 2,
@@ -35,7 +36,8 @@ function createProducts() {
                     frontCam: '12 MP',
                     battery: '3900 mAh',
                 },
-                productPrice: 15990000
+                productPrice: 15990000,
+                releaseDate: '02/2023'
             },
             {
                 productId: 3,
@@ -52,7 +54,8 @@ function createProducts() {
                     frontCam: '12 MP',
                     battery: '4400 mAh',
                 },
-                productPrice: 47990000
+                productPrice: 47990000,
+                releaseDate: '07/2023'
             },
             {
                 productId: 4,
@@ -69,7 +72,8 @@ function createProducts() {
                     frontCam: '12 MP',
                     battery: '3900 mAh',
                 },
-                productPrice: 21990000
+                productPrice: 21990000,
+                releaseDate: '07/2023'
             },
             {
                 productId: 5,
@@ -86,7 +90,8 @@ function createProducts() {
                     frontCam: '12 MP',
                     battery: '4700 mAh',
                 },
-                productPrice: 22990000
+                productPrice: 22990000,
+                releaseDate: '02/2023'
             },
             {
                 productId: 6,
@@ -103,7 +108,8 @@ function createProducts() {
                     frontCam: '12 MP',
                     battery: '4400 mAh',
                 },
-                productPrice: 16990000
+                productPrice: 16990000,
+                releaseDate: '02/2022'
             },
             {
                 productId: 7,
@@ -120,7 +126,8 @@ function createProducts() {
                     frontCam: '10 MP',
                     battery: '4400 mAh',
                 },
-                productPrice: 29990000
+                productPrice: 29990000,
+                releaseDate: '08/2022'
             },
             {
                 productId: 8,
@@ -137,7 +144,8 @@ function createProducts() {
                     frontCam: '10 MP',
                     battery: '3900 mAh',
                 },
-                productPrice: 12990000
+                productPrice: 12990000,
+                releaseDate: '08/2022'
             },
             {
                 productId: 9,
@@ -154,7 +162,8 @@ function createProducts() {
                     frontCam: '10 MP',
                     battery: '4500 mAh',
                 },
-                productPrice: 13390000
+                productPrice: 13390000,
+                releaseDate: '10/2023'
             },
             {
                 productId: 10,
@@ -171,7 +180,8 @@ function createProducts() {
                     frontCam: '32 MP',
                     battery: '4500 mAh',
                 },
-                productPrice: 11990000
+                productPrice: 11990000,
+                releaseDate: '01/2022'
             },
             //Apple
             {
@@ -189,7 +199,8 @@ function createProducts() {
                     frontCam: '12 MP',
                     battery: '4422 mAh',
                 },
-                productPrice: 33990000
+                productPrice: 33990000,
+                releaseDate: '09/2023'
             },
             {
                 productId: 12,
@@ -206,7 +217,8 @@ function createProducts() {
                     frontCam: '12 MP',
                     battery: '3274 mAh',
                 },
-                productPrice: 28890000
+                productPrice: 28890000,
+                releaseDate: '09/2023'
             },
             {
                 productId: 13,
@@ -223,7 +235,8 @@ function createProducts() {
                     frontCam: '12 MP',
                     battery: '4383 mAh',
                 },
-                productPrice: 25790000
+                productPrice: 25790000,
+                releaseDate: '09/2023'
             },
             {
                 productId: 14,
@@ -240,7 +253,8 @@ function createProducts() {
                     frontCam: '12 MP',
                     battery: '3932 mAh',
                 },
-                productPrice: 21990000
+                productPrice: 21990000,
+                releaseDate: '09/2023'
             },
             {
                 productId: 15,
@@ -257,7 +271,8 @@ function createProducts() {
                     frontCam: '12 MP',
                     battery: '4323 mAh',
                 },
-                productPrice: 27490000
+                productPrice: 27490000,
+                releaseDate: '09/2022'
             },
             {
                 productId: 16,
@@ -274,7 +289,8 @@ function createProducts() {
                     frontCam: '12 MP',
                     battery: '3200 mAh',
                 },
-                productPrice: 25190000
+                productPrice: 25190000,
+                releaseDate: '09/2022'
             },
             {
                 productId: 17,
@@ -291,7 +307,8 @@ function createProducts() {
                     frontCam: '12 MP',
                     battery: '4325 mAh',
                 },
-                productPrice: 21990000
+                productPrice: 21990000,
+                releaseDate: '09/2022'
             },
             {
                 productId: 18,
@@ -308,7 +325,8 @@ function createProducts() {
                     frontCam: '12 MP',
                     battery: '3279 mAh',
                 },
-                productPrice: 18990000
+                productPrice: 18990000,
+                releaseDate: '09/2022'
             },
             {
                 productId: 19,
@@ -325,7 +343,8 @@ function createProducts() {
                     frontCam: '12 MP',
                     battery: '3240 mAh',
                 },
-                productPrice: 16490000
+                productPrice: 16490000,
+                releaseDate: '09/2021'
             },
             {
                 productId: 20,
@@ -342,7 +361,8 @@ function createProducts() {
                     frontCam: '12 MP',
                     battery: '2815 mAh',
                 },
-                productPrice: 13690000
+                productPrice: 13690000,
+                releaseDate: '10/2020'
             },
             //Oppo
             {
@@ -360,7 +380,8 @@ function createProducts() {
                     frontCam: '20 MP',
                     battery: '4805 mAh',
                 },
-                productPrice: 44990000
+                productPrice: 44990000,
+                releaseDate: '10/2023'
             },
             {
                 productId: 22,
@@ -377,7 +398,8 @@ function createProducts() {
                     frontCam: '20 MP',
                     battery: '4300 mAh',
                 },
-                productPrice: 22990000
+                productPrice: 22990000,
+                releaseDate: '10/2023'
             },
             {
                 productId: 23,
@@ -394,7 +416,8 @@ function createProducts() {
                     frontCam: '32 MP',
                     battery: '4700 mAh',
                 },
-                productPrice: 19990000
+                productPrice: 19990000,
+                releaseDate: '08/2023'
             },
             {
                 productId: 24,
@@ -411,7 +434,8 @@ function createProducts() {
                     frontCam: '32 MP',
                     battery: '4600 mAh',
                 },
-                productPrice: 13990000
+                productPrice: 13990000,
+                releaseDate: '08/2023'
             },
             {
                 productId: 25,
@@ -428,7 +452,8 @@ function createProducts() {
                     frontCam: '20 MP',
                     battery: '5000 mAh',
                 },
-                productPrice: 9490000
+                productPrice: 9490000,
+                releaseDate: '08/2023'
             },
             {
                 productId: 26,
@@ -445,7 +470,8 @@ function createProducts() {
                     frontCam: '32 MP',
                     battery: '4300 mAh',
                 },
-                productPrice: 17990000
+                productPrice: 17990000,
+                releaseDate: '04/2023'
             },
             {
                 productId: 27,
@@ -462,7 +488,8 @@ function createProducts() {
                     frontCam: '20 MP',
                     battery: '4300 mAh',
                 },
-                productPrice: 13990000
+                productPrice: 13990000,
+                releaseDate: '09/2022'
             },
             {
                 productId: 28,
@@ -479,7 +506,8 @@ function createProducts() {
                     frontCam: '20 MP',
                     battery: '3900 mAh',
                 },
-                productPrice: 8990000
+                productPrice: 8990000,
+                releaseDate: '01/2023'
             },
             //Xiaomi
             {
@@ -497,7 +525,8 @@ function createProducts() {
                     frontCam: '20 MP',
                     battery: '5000 mAh',
                 },
-                productPrice: 14990000
+                productPrice: 14990000,
+                releaseDate: '09/2023'
             },
             {
                 productId: 30,
@@ -514,7 +543,8 @@ function createProducts() {
                     frontCam: '20 MP',
                     battery: '4000 mAh',
                 },
-                productPrice: 10990000
+                productPrice: 10990000,
+                releaseDate: '09/2023'
             },
             {
                 productId: 31,
@@ -531,7 +561,8 @@ function createProducts() {
                     frontCam: '32 MP',
                     battery: '4000 mAh',
                 },
-                productPrice: 9490000
+                productPrice: 9490000,
+                releaseDate: '09/2023'
             },
             {
                 productId: 32,
@@ -548,7 +579,8 @@ function createProducts() {
                     frontCam: '20 MP',
                     battery: '5000 mAh',
                 },
-                productPrice: 9490000
+                productPrice: 9490000,
+                releaseDate: '10/2022'
             },
             {
                 productId: 33,
@@ -565,7 +597,8 @@ function createProducts() {
                     frontCam: '16 MP',
                     battery: '5000 mAh',
                 },
-                productPrice: 8490000
+                productPrice: 8490000,
+                releaseDate: '04/2023'
             },
             {
                 productId: 34,
@@ -582,7 +615,8 @@ function createProducts() {
                     frontCam: '16 MP',
                     battery: '5000 mAh',
                 },
-                productPrice: 7140000
+                productPrice: 7140000,
+                releaseDate: '06/2022'
             },
             {
                 productId: 35,
@@ -599,7 +633,8 @@ function createProducts() {
                     frontCam: '16 MP',
                     battery: '5000 mAh',
                 },
-                productPrice: 8490000
+                productPrice: 8490000,
+                releaseDate: '10/2021'
             },
             //Huawei
             {
@@ -617,7 +652,8 @@ function createProducts() {
                     frontCam: '13 MP',
                     battery: '4815 mAh',
                 },
-                productPrice: 14890000
+                productPrice: 14890000,
+                releaseDate: '03/2023'
             },
             {
                 productId: 37,
@@ -634,7 +670,8 @@ function createProducts() {
                     frontCam: '13 MP',
                     battery: '4000 mAh',
                 },
-                productPrice: 27990000
+                productPrice: 27990000,
+                releaseDate: '04/2022'
             },
             {
                 productId: 38,
@@ -651,7 +688,8 @@ function createProducts() {
                     frontCam: '13 MP',
                     battery: '4500 mAh',
                 },
-                productPrice: 28990000
+                productPrice: 28990000,
+                releaseDate: '04/2022'
             },
             {
                 productId: 39,
@@ -668,7 +706,8 @@ function createProducts() {
                     frontCam: '13 MP',
                     battery: '5000 mAh',
                 },
-                productPrice: 9000000
+                productPrice: 9000000,
+                releaseDate: '11/2022'
             },
             {
                 productId: 40,
@@ -685,7 +724,8 @@ function createProducts() {
                     frontCam: '13 MP',
                     battery: '4000 mAh',
                 },
-                productPrice: 8000000
+                productPrice: 8000000,
+                releaseDate: '03/2022'
             },
             {
                 productId: 41,
@@ -702,7 +742,8 @@ function createProducts() {
                     frontCam: '13 MP',
                     battery: '4500 mAh',
                 },
-                productPrice: 11000000
+                productPrice: 11000000,
+                releaseDate: '10/2022'
             },
             {
                 productId: 42,
@@ -719,7 +760,8 @@ function createProducts() {
                     frontCam: '13 MP',
                     battery: '4000 mAh',
                 },
-                productPrice: 14000000
+                productPrice: 14000000,
+                releaseDate: '09/2022'
             },
             {
                 productId: 43,
@@ -736,7 +778,8 @@ function createProducts() {
                     frontCam: '13 MP',
                     battery: '4000 mAh',
                 },
-                productPrice: 8500000
+                productPrice: 8500000,
+                releaseDate: '04/2020'
             },
             {
                 productId: 44,
@@ -753,7 +796,8 @@ function createProducts() {
                     frontCam: '13 MP',
                     battery: '4000 mAh',
                 },
-                productPrice: 9200000
+                productPrice: 9200000,
+                releaseDate: '04/2022'
             },
             {
                 productId: 45,
@@ -770,7 +814,8 @@ function createProducts() {
                     frontCam: '13 MP',
                     battery: '4500 mAh',
                 },
-                productPrice: 19900000
+                productPrice: 19900000,
+                releaseDate: '04/2019'
             },
             {
                 productId: 46,
@@ -787,7 +832,8 @@ function createProducts() {
                     frontCam: '13 MP',
                     battery: '5000 mAh',
                 },
-                productPrice: 23900000
+                productPrice: 23900000,
+                releaseDate: '03/2019'
             },
             {
                 productId: 47,
@@ -804,7 +850,8 @@ function createProducts() {
                     frontCam: '32 MP',
                     battery: '3650 mAh',
                 },
-                productPrice: 16990000
+                productPrice: 16990000,
+                releaseDate: '03/2019'
             },
             {
                 productId: 48,
@@ -821,18 +868,31 @@ function createProducts() {
                     frontCam: '20 MP',
                     battery: '5000 mAh',
                 },
-                productPrice: 7200000
+                productPrice: 7200000,
+                releaseDate: '09/2021'
             },
         ];
-
-        //Xáo trộn mảng sản phẩm
-        productArray.sort(() => Math.random() - 0.5);
-        productArray.forEach((product, index) => {
-            product.productId = index + 1;
+        
+        //Sắp xếp danh sách sản phẩm theo thứ tự mới đến cũ (theo releaseDate)
+        products.sort((a, b) => {
+             const [monthA, yearA] = a.releaseDate.split('/');
+             const [monthB, yearB] = b.releaseDate.split('/');
+             
+             if(yearB !== yearA) {
+                 return parseInt(yearB, 10) - parseInt(yearB, 10);
+             }
+             else {
+                 return parseInt(monthB, 10) - parseInt(monthA, 10);
+             }
+        });
+        
+        //Cập nhật lại productId
+        products.forEach((product, index) => {
+            product.productId = index + 1; 
         });
 
         //lưu danh sách sản phẩm vào localStorage
-        localStorage.setItem('products', JSON.stringify(productArray));
+        localStorage.setItem('products', JSON.stringify(products));
     }
 }
 

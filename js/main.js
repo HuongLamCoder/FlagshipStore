@@ -35,7 +35,6 @@ window.addEventListener('load', () => {
      const nextBtn = document.querySelector('.slider-next');
      const dotItems = document.querySelectorAll('.slider-dot-item');
      const sliderItemWidth = sliderItems[0].offsetWidth;    //lấy độ rộng phần tử
-     console.log('sliderItemWidth: ' + sliderItemWidth);
      const slidesLength = sliderItems.length;
      let positionX = 0;
      let index = 0;
@@ -52,9 +51,7 @@ window.addEventListener('load', () => {
     dotItems.forEach((dotItem) => {
         dotItem.addEventListener('click', () => {
             const targetIndex = parseInt(dotItem.getAttribute('data-index'));
-            console.log('targetIndex: ' + targetIndex)
             positionX = -targetIndex * sliderItemWidth;
-            console.log('positionX: ' + positionX);
             sliderMain.style = `transform: translateX(${positionX}px)`;
             index = targetIndex;
             //Xóa class active của tất cả dotItem
@@ -85,7 +82,6 @@ window.addEventListener('load', () => {
         }
         
         positionX = -index * sliderItemWidth;
-        console.log('index: ' + index);
         sliderMain.style = `transform: translateX(${positionX}px)`;
         
         //Cập nhật lại class active cho dot
@@ -540,62 +536,65 @@ function renderProducts(showProducts) {
 //Start: Pagination (phân trang)
 let perPage = 12;   //số sản phẩm hiển thị trên 1 trang
 let currentPage = 1;    //trang hiện tại
-let totalPage = 0;  //tổng số trang
-let productShow = [];    //mảng chứa các sản phẩm hiển thị trên 1 trang
 
-function displayListProducts(productAll, perPage, currentPage) {
+function displayListProducts(products, perPage, currentPage) {
     let start = (currentPage - 1) * perPage;
     let end = start + perPage;
     //productShow: mảng chứa các sản phẩm hiển thị trên 1 trang
     //slice(): trả về 1 mảng mới chứa các phần tử được lấy ra từ mảng ban đầu
-    productShow = productAll.slice(start, end);
-    renderProducts(productShow);
+    let productPerPage = products.slice(start, end);
+    renderProducts(productPerPage);
 }
 
     //Pagination
-function paginationChange(page, productAll, currentPage) {
-    let node = document.createElement(`li`);
-    node.classList.add('page-nav-item');
-    node.innerHTML = `<a href="javascript:">${page}</a>`;
+function activePagination(page, products, currentPage) {
+    let paginationItem = document.createElement(`li`);
+    paginationItem.classList.add('page-nav-item');
+    paginationItem.innerHTML = `<a href="javascript:">${page}</a>`;
     //Nếu trang là trang hiện tại thì thêm class active
     if(page === currentPage) {
-        node.classList.add('active');
+        paginationItem.classList.add('active');
     }
-    node.addEventListener('click', () => {
+    paginationItem.addEventListener('click', () => {
         //Khi click vào 1 trang khác trang hiện tại thì cập nhật lại currentPage
         currentPage = page;
         //Hiển thị sản phẩm
-        displayListProducts(productAll, perPage, currentPage);
+        displayListProducts(products, perPage, currentPage);
         //Xóa class active của các trang hiện tại cũ
         let currentActivePages = document.querySelectorAll('.page-nav-item.active');
         for(let i = 0; i < currentActivePages.length; i++) {
             currentActivePages[i].classList.remove('active');
         }
         //Thêm class active vào trang hiện tại mới
-        node.classList.add('active');
+        paginationItem.classList.add('active');
         document.getElementById('home-service').scrollIntoView();
     });
-    return node;
+    return paginationItem;
 }
 
-function pagination(productAll, perPage) {
+function pagination(products, perPage, currentPage) {
     //Xóa các phân trang cũ
     document.querySelector('.page-nav-list').innerHTML = '';
-    //Tính tổng số trang
-    //Math.ceil(): làm tròn lên
-    totalPage = Math.ceil(productAll.length / perPage);
+    let remainder = products.length % perPage;
+    let totalPage = 0;
+    if(remainder === 0) {
+        totalPage = products.length / perPage
+    }
+    else {
+        totalPage = (products.length - remainder) / perPage + 1;
+    }
     for(let i = 1; i <= totalPage; i++) {
         //Tạo nút phân trang và thêm vào ul có class là page-nav-list
-        let li = paginationChange(i, productAll, currentPage);
+        let li = activePagination(i, products, currentPage);
         document.querySelector('.page-nav-list').appendChild(li);
     }
 }
 
     //Hàm hiển thị sản phẩm trang chủ
 function showHomeProducts(products) {
-    let productAll = products.filter(item => parseInt(item.productStatus) === 1)
-    displayListProducts(productAll, perPage, currentPage);
-    pagination(productAll, perPage);
+    let productArr = products.filter(item => parseInt(item.productStatus) === 1)
+    displayListProducts(productArr, perPage, currentPage);
+    pagination(productArr, perPage, currentPage);
 }
 window.onload = showHomeProducts(JSON.parse(localStorage.getItem('products')));
 // End: Pagination (phân trang)
@@ -843,14 +842,14 @@ function showCategory(category) {
 
 // Start: Giỏ hàng
     //Thêm sản phẩm vào giỏ hàng
-function addToCart(index) {
+function addToCart(id) {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     let quantity = document.querySelector('.input-qty').value;
     let productDetailNote = document.querySelector('#popup-detail-note').value;
     let note = productDetailNote === '' ? 'Không có ghi chú' : productDetailNote; //nếu ghi chú rỗng thì gán mặc định là 'Không có ghi chú'
     //Tạo 1 đối tượng product chứa thông tin sản phẩm trong giỏ hàng
     let productCart = {
-        productId: index,
+        productId: id,
         productQty: parseInt(quantity),
         productNote: note
     };
@@ -1108,10 +1107,10 @@ function buyNow() {
             let quantities = parseInt(productInfo.querySelector('.buttons_added .input-qty').value);    //lấy số lượng sản phẩm
             let noteValue = productInfo.querySelector('#popup-detail-note').value;    //lấy ghi chú sản phẩm
             let note = noteValue === '' ? 'Không có ghi chú' : noteValue; //nếu ghi chú rỗng thì gán mặc định là 'Không có ghi chú'
+
             let products = JSON.parse(localStorage.getItem('products'));    //lấy mảng sản phẩm từ localStorage
             let product = products.find(item => parseInt(id) === item.productId);    //lấy ra sản phẩm có id bằng với id cần tìm
-            // console.log(product);
-            product.productQty = parseInt(quantities);    //gán số lượng sản phẩm vào thuộc tính productQty của product
+            product.productQty = quantities;    //gán số lượng sản phẩm vào thuộc tính productQty của product
             product.productNote = note;   //gán ghi chú sản phẩm vào thuộc tính productNote của product
             checkoutPage.classList.add('active');    //hiển thị trang thanh toán
             checkout(2, product);   //xử lý thanh toán với option "Mua ngay"
@@ -1231,7 +1230,6 @@ function checkout(option, product) {
     let deliveryMthd = document.querySelector('#giao-tan-noi');
     let pickupMthd = document.querySelector('#tu-den-lay');
     let pickupGroup = document.querySelector('#tudenlay-group');
-    console.log(pickupGroup)
     let chkShip = document.querySelectorAll('.chk-ship');
 
     //Tự đến lấy
@@ -1358,7 +1356,7 @@ function handlerOrder(product) {
     }
     else {
         //Tạo đối tượng chi tiết đơn hàng (orderDetail)
-        let orderDetail =  {
+        let order =  {
             orderId: orderId,
             customer: currentUser.phoneNumber,
             deliveryMethod: deliveryMethod,
@@ -1373,7 +1371,7 @@ function handlerOrder(product) {
             orderStatus: 0,     //trạng thái đơn hàng
         };
 
-        orders.unshift(orderDetail); //thêm đối tượng orderDetail vào đầu mảng order (unshift(): thêm 1 hoặc nhiều phần tử vào đầu mảng và trả về độ dài mới của mảng)
+        orders.unshift(order); //thêm đối tượng orderDetail vào đầu mảng order (unshift(): thêm 1 hoặc nhiều phần tử vào đầu mảng và trả về độ dài mới của mảng)
         if(product == null) {   //nếu người dùng đã thanh toán sản phẩm trong giỏ hàng
             currentUser.cart = [];    //xóa giỏ hàng
         }

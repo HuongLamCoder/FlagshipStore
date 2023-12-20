@@ -23,4 +23,24 @@ var lcobj = JSON.parse(localStorage.getItem('object'));
 console.log(lcobj.age === 20);
 */
 
-//Kiểm tra biểu thức chính quy
+let product = {
+    productId: 1,
+    productStatus: 1,
+    productBrand: "Samsung",
+    productName: "Samsung Galaxy S23 Ultra 5G",
+    productImg: "assets/img/productImg/001.jpg",
+    productSpecs: {
+        chip: 'Snapdragon 8 Gen 2 for Galaxy',
+        ram: '8GB',
+        storage: '128GB',
+        screen: '6.8 inch',
+        rearCam: 'Chính 200 MP & Phụ 12 MP, 10 MP, 10 MP',
+        frontCam: '12 MP',
+        battery: '5000 mAh',
+    },
+    productPrice: 23990000,
+    releaseDate: '09/2023'
+}
+console.log(new Date(product.releaseDate));
+
+
