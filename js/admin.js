@@ -4,9 +4,9 @@ function checkLogin() {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (currentUser === null || parseInt(currentUser.userType) === 0) {
         document.querySelector('body').innerHTML = `
-        <div class="access-denied-section">
-            <img src="./assets/img/do-not-enter.png" alt="DO NOT ENTER!" class="access-denied-img">
-        </div>
+            <div class="access-denied-section">
+                <img src="./assets/img/do-not-enter.png" alt="DO NOT ENTER!" class="access-denied-img">
+            </div>
         `;
         let result = confirm('Bạn không có quyền truy cập vào trang này! Bạn có muốn quay về trang chủ?');
         if(result) {
@@ -113,7 +113,7 @@ function showListProduct(products) {
                 `<button class="unhide-btn" onclick="changeProductStatus(${product.productId})">
                     <i class="fa-regular fa-eye"></i>
                     Hiện
-                 </button>`
+                 </button>`;
             productHTML += `
                 <div class="list">
                     <div class="list-left">
